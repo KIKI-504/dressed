@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { supabase } from './supabase.js'
+import { supabase, supabaseAdmin } from './supabase.js'
 
 const STYLE = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
@@ -242,13 +242,13 @@ export default function App() {
       // 1. Upload image to Supabase Storage
       const ext = item.file.name.split('.').pop()
       const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-      const { error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabaseAdmin.storage
         .from('outfit-images')
         .upload(path, item.file, { contentType: item.file.type })
 
       if (uploadError) throw uploadError
 
-      const { data: { publicUrl } } = supabase.storage
+      const { data: { publicUrl } } = supabaseAdmin.storage
         .from('outfit-images')
         .getPublicUrl(path)
 
