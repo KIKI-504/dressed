@@ -5,7 +5,7 @@ const STYLE = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   :root {
     --cream: #F7F4EF;
     --ink: #1A1916;
@@ -260,7 +260,7 @@ export default function App() {
       })
 
       let tags = []
-      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      const resp = await fetch('/api/analyse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
