@@ -44,5 +44,5 @@ const imgRes = await fetch(req.body.imageUrl)
   try {
     res.status(200).json(JSON.parse(clean))
   } catch(e) {
-    rres.status(200).json({ tags: ['test-tag', 'black outfit', 'evening'] })
+    res.status(200).json({ tags: ['test-tag', 'black outfit', 'evening'] })
 
