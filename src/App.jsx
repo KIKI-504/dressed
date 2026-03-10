@@ -263,26 +263,11 @@ export default function App() {
       const resp = await fetch('/api/analyse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          messages: [{
-            role: 'user',
-            content: [
-              { type: 'image', source: { type: 'base64', media_type: item.file.type, data: base64 } },
-              {
-                type: 'text',
-                text: `You are a fashion stylist analysing an outfit photo. Return ONLY a JSON object with no preamble or markdown:
-{"tags":["tag1","tag2",...]}
-Generate 6–10 tags covering: individual garments (e.g. "black blazer"), colours, style vibe (e.g. "minimalist", "boho"), occasion (e.g. "business", "weekend", "evening"), season, and notable details (e.g. "oversized", "tailored", "layered"). Use lowercase, concise phrases.`
-              }
-            ]
-          }]
-        })
+        body: JSON.stringify({ imageUrl: publicUrl })
       })
       const aiData = await resp.json()
-      const text = aiData.content?.find(b => b.type === 'text')?.text || '{"tags":[]}'
-      const parsed = JSON.parse(text.replace(/```json|```/g, '').trim())
+      const parsed = aiData
+
       tags = parsed.tags || []
 
       // 3. Save to Supabase database
