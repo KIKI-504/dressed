@@ -265,7 +265,7 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
 
       body: JSON.stringify({ imageUrl: publicUrl })
-
+})
       const aiData = await resp.json()
       const parsed = aiData
 
