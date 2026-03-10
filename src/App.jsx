@@ -269,7 +269,15 @@ export default function App() {
       const aiData = await resp.json()
       const parsed = aiData
 
-      tags = parsed.tags || []
+      const t = parsed.tags || {}
+tags = [
+  ...(t.garments || []),
+  ...(t.colours || []),
+  ...(t.style || []),
+  ...(t.occasion || []),
+  ...(t.season || []),
+]
+
 
       // 3. Save to Supabase database
       const { data: newOutfit, error: dbError } = await supabase
