@@ -101,6 +101,14 @@ const STYLE = `
   .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
   .card-date { font-size: 0.55rem; color: var(--warm-mid); opacity: 0.7; }
   .card-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+.category-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.cat-tab { padding: 6px 16px; border-radius: 20px; border: 1px solid #ccc; background: none; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.cat-tab.active { background: #222; color: #fff; border-color: #222; }
+.category-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.cat-btn { padding: 5px 14px; border-radius: 20px; border: 1px solid #ccc; background: none; cursor: pointer; font-size: 0.8rem; text-transform: capitalize; }
+.cat-btn.active { background: #222; color: #fff; border-color: #222; }
+.card.inspiration { outline: 3px solid #e63946; }
+
   .tag {
     font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase;
     padding: 3px 8px; background: var(--soft); border-radius: 10px; color: var(--warm-mid);
@@ -210,6 +218,8 @@ export default function App() {
   const [modalReaction, setModalReaction] = useState(null)
   const [saving, setSaving] = useState(false)
   const [newTag, setNewTag] = useState('')
+  const [activeCategory, setActiveCategory] = useState('all')
+
   const nextId = useRef(Date.now())
   const processingRef = useRef(false)
 
@@ -331,6 +341,8 @@ tags = [
 
   const filtered = outfits.filter(o => {
     if (activeFilter && !(o.tags || []).includes(activeFilter)) return false
+    if (activeCategory !== 'all' && !(o.categories || []).includes(activeCategory)) return false
+
     if (search) {
       const s = search.toLowerCase()
       if (!(o.tags || []).some(t => t.includes(s)) && !(o.note || '').toLowerCase().includes(s)) return false
@@ -346,6 +358,20 @@ tags = [
   setNewTag('')
 }
 
+async function toggleCategory(category) {
+  if (!selected) return
+  const current = selected.categories || []
+  const updated = current.includes(category)
+    ? current.filter(c => c !== category)
+    : [...current, category]
+  const { error } = await supabase.from('outfits').update({ categories: updated }).eq('id', selected.id)
+  if (!error) {
+    setOutfits(prev => prev.map(o => o.id === selected.id ? { ...o, categories: updated } : o))
+    setSelected(prev => ({ ...prev, categories: updated }))
+  }
+}
+
+  
 async function addTag(tag) {
   if (!tag.trim() || !selected) return
   const updatedTags = [...(selected.tags || []), tag.trim().toLowerCase()]
@@ -434,6 +460,16 @@ async function addTag(tag) {
               <div className="page-title">Emery's Looks</div>
               <div className="filter-bar">
                 <span className="filter-label">Filter</span>
+                <div className="category-tabs">
+  {['all', 'casual', 'business', 'party', 'inspiration'].map(cat => (
+    <button
+      key={cat}
+      className={`cat-tab ${activeCategory === cat ? 'active' : ''}`}
+      onClick={() => setActiveCategory(cat)}
+    >{cat}</button>
+  ))}
+</div>
+
                 {allTags.slice(0, 14).map(t => (
                   <button key={t} className={`filter-tag ${activeFilter === t ? 'active' : ''}`}
                     onClick={() => setActiveFilter(activeFilter === t ? null : t)}>{t}</button>
@@ -541,6 +577,17 @@ async function addTag(tag) {
                   </div>
                 </div>
                 <div>
+                  <div className="modal-section-label">Categories</div>
+<div className="category-row">
+  {['casual', 'business', 'party', 'inspiration'].map(cat => (
+    <button
+      key={cat}
+      className={`cat-btn ${(selected.categories || []).includes(cat) ? 'active' : ''}`}
+      onClick={() => toggleCategory(cat)}
+    >{cat}</button>
+  ))}
+</div>
+
                   <div className="modal-section-label">Reaction</div>
                   <div className="reaction-row">
                     <button className={`reaction-btn love ${modalReaction === 'love' ? 'active' : ''}`}
