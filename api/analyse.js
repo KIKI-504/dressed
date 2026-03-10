@@ -10,8 +10,10 @@ export default async function handler(req, res) {
 
   const { imageUrl } = req.body
 
- const base64 = req.body.base64
-  const mediaType = req.body.mediaType || 'image/jpeg'
+const imgRes = await fetch(req.body.imageUrl)
+  const imgBuffer = await imgRes.arrayBuffer()
+  const base64 = Buffer.from(imgBuffer).toString('base64')
+  const mediaType = imgRes.headers.get('content-type') || 'image/jpeg'
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
