@@ -303,6 +303,14 @@ tags = [
     }
 
     processingRef.current = false
+    async function deleteOutfit(outfit) {
+  if (!confirm('Delete this look?')) return
+  const path = outfit.image_url.split('/outfit-images/')[1]
+  await supabase.storage.from('outfit-images').remove([path])
+  await supabase.from('outfits').delete().eq('id', outfit.id)
+  setOutfits(prev => prev.filter(o => o.id !== outfit.id))
+}
+
   }
 
   function handleFiles(files) {
@@ -442,7 +450,9 @@ tags = [
                           {(outfit.tags || []).slice(0, 4).map(t => <span key={t} className="tag">{t}</span>)}
                           {(outfit.tags || []).length > 4 && <span className="tag">+{outfit.tags.length - 4}</span>}
                         </div>
-                        {outfit.note && <div className="card-note">{outfit.note}</div>} <button className="delete-btn" onClick={(e) => { e.stopPropagation(); deleteOutfit(outfit); }}>Delete</button>"{outfit.note}"</div>}
+                       {outfit.note && <div className="card-note">{outfit.note}</div>}
+<button className="delete-btn" onClick={(e) => { e.stopPropagation(); deleteOutfit(outfit); }}>Delete</button>
+
                       </div>
                     </div>
                   ))}
