@@ -209,6 +209,7 @@ export default function App() {
   const [modalNote, setModalNote] = useState('')
   const [modalReaction, setModalReaction] = useState(null)
   const [saving, setSaving] = useState(false)
+  const [newTag, setNewTag] = useState('')
   const nextId = useRef(Date.now())
   const processingRef = useRef(false)
 
@@ -337,11 +338,25 @@ tags = [
     return true
   })
 
-  function openModal(outfit) {
-    setSelected(outfit)
-    setModalNote(outfit.note || '')
-    setModalReaction(outfit.reaction || null)
+  
+    function openModal(outfit) {
+  setSelected(outfit)
+  setModalNote(outfit.note || '')
+  setModalReaction(outfit.reaction || null)
+  setNewTag('')
+}
+
+async function addTag(tag) {
+  if (!tag.trim() || !selected) return
+  const updatedTags = [...(selected.tags || []), tag.trim().toLowerCase()]
+  const { error } = await supabase.from('outfits').update({ tags: updatedTags }).eq('id', selected.id)
+  if (!error) {
+    setOutfits(prev => prev.map(o => o.id === selected.id ? { ...o, tags: updatedTags } : o))
+    setSelected(prev => ({ ...prev, tags: updatedTags }))
+    setNewTag('')
   }
+}
+
 
   async function saveModal() {
     setSaving(true)
@@ -518,6 +533,11 @@ tags = [
                   <div className="modal-section-label">Tags</div>
                   <div className="modal-tags">
                     {(selected.tags || []).map(t => <span key={t} className="tag">{t}</span>)}
+<div className="add-tag-row">
+  <input className="tag-input" placeholder="Add a tag..." value={newTag} onChange={e => setNewTag(e.target.value)} />
+  <button className="add-tag-btn" onClick={() => addTag(newTag)}>Add</button>
+</div>
+
                   </div>
                 </div>
                 <div>
