@@ -303,6 +303,7 @@ tags = [
     }
 
     processingRef.current = false
+  }
     async function deleteOutfit(outfit) {
   if (!confirm('Delete this look?')) return
   const path = outfit.image_url.split('/outfit-images/')[1]
@@ -311,7 +312,6 @@ tags = [
   setOutfits(prev => prev.filter(o => o.id !== outfit.id))
 }
 
-  }
 
   function handleFiles(files) {
     const images = Array.from(files).filter(f => f.type.startsWith('image/'))
