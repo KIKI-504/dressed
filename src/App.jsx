@@ -263,9 +263,9 @@ export default function App() {
       const resp = await fetch('/api/analyse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({ imageUrl: publicUrl, base64, mediaType: item.file.type })
 
-      })
+      body: JSON.stringify({ imageUrl: publicUrl })
+
       const aiData = await resp.json()
       const parsed = aiData
 
