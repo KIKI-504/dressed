@@ -235,6 +235,52 @@ function getTagFrequency(outfits) {
   return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 10)
 }
 
+// ── Image compression ────────────────────────────────────────────────────────
+// Resizes to max 1500px on the longest side and compresses to JPEG at 80%
+// quality. Runs entirely in the browser — no dependencies needed.
+// Only compresses if the file is over 4.5 MB; smaller files are returned as-is.
+
+const MAX_BYTES = 4.5 * 1024 * 1024 // 4.5 MB
+const MAX_DIMENSION = 1500           // px
+
+async function compressImage(file) {
+  if (file.size <= MAX_BYTES) return file // small enough, skip
+
+  return new Promise((resolve) => {
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+
+      // Work out new dimensions, capping the longest side at MAX_DIMENSION
+      let { width, height } = img
+      if (width > height) {
+        if (width > MAX_DIMENSION) { height = Math.round(height * MAX_DIMENSION / width); width = MAX_DIMENSION }
+      } else {
+        if (height > MAX_DIMENSION) { width = Math.round(width * MAX_DIMENSION / height); height = MAX_DIMENSION }
+      }
+
+      const canvas = document.createElement('canvas')
+      canvas.width = width
+      canvas.height = height
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height)
+
+      canvas.toBlob(
+        (blob) => {
+          // Give it a clean filename with .jpg extension
+          const name = file.name.replace(/\.[^.]+$/, '') + '.jpg'
+          resolve(new File([blob], name, { type: 'image/jpeg' }))
+        },
+        'image/jpeg',
+        0.8 // 80% quality
+      )
+    }
+
+    img.src = url
+  })
+}
+
 export default function App() {
   const [view, setView] = useState('wardrobe')
   const [outfits, setOutfits] = useState([])
@@ -336,9 +382,13 @@ export default function App() {
     setOutfits(prev => prev.filter(o => o.id !== outfit.id))
   }
 
-  function handleFiles(files) {
+  async function handleFiles(files) {
     const images = Array.from(files).filter(f => f.type.startsWith('image/'))
-    const newItems = images.map(file => ({
+
+    // Compress each image before adding to the queue
+    const compressed = await Promise.all(images.map(compressImage))
+
+    const newItems = compressed.map(file => ({
       id: nextId.current++,
       file,
       preview: URL.createObjectURL(file),
