@@ -5,7 +5,7 @@ const STYLE = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
- 
+
   :root {
     --cream: #F7F4EF;
     --ink: #1A1916;
@@ -90,30 +90,59 @@ const STYLE = `
   .search-input:focus { border-color: var(--warm-mid); }
   .search-input::placeholder { color: var(--warm-mid); opacity: 0.6; }
 
+  .category-tabs { display: flex; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; width: 100%; }
+  .cat-tab {
+    padding: 5px 14px; border-radius: 20px; border: 1px solid var(--soft);
+    background: transparent; cursor: pointer; font-family: 'Montserrat', sans-serif;
+    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); transition: all 0.18s;
+  }
+  .cat-tab:hover { border-color: var(--warm-mid); color: var(--ink); }
+  .cat-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  .category-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .cat-btn {
+    padding: 5px 14px; border-radius: 20px; border: 1px solid var(--soft);
+    background: transparent; cursor: pointer; font-family: 'Montserrat', sans-serif;
+    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); transition: all 0.18s;
+  }
+  .cat-btn:hover { border-color: var(--warm-mid); color: var(--ink); }
+  .cat-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 28px; }
   .card {
     background: white; border-radius: 2px; overflow: hidden; cursor: pointer;
     transition: transform 0.25s, box-shadow 0.25s; box-shadow: 0 1px 3px rgba(26,25,22,0.06);
   }
   .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(26,25,22,0.1); }
+  .card.inspiration { outline: 3px solid #e63946; }
   .card-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
   .card-body { padding: 16px; }
   .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
   .card-date { font-size: 0.55rem; color: var(--warm-mid); opacity: 0.7; }
   .card-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
-.category-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-.cat-tab { padding: 6px 16px; border-radius: 20px; border: 1px solid #ccc; background: none; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
-.cat-tab.active { background: #222; color: #fff; border-color: #222; }
-.category-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-.cat-btn { padding: 5px 14px; border-radius: 20px; border: 1px solid #ccc; background: none; cursor: pointer; font-size: 0.8rem; text-transform: capitalize; }
-.cat-btn.active { background: #222; color: #fff; border-color: #222; }
-.card.inspiration { outline: 3px solid #e63946; }
-
   .tag {
     font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase;
     padding: 3px 8px; background: var(--soft); border-radius: 10px; color: var(--warm-mid);
   }
-  .card-note { font-size: 0.65rem; color: var(--warm-mid); font-style: italic; line-height: 1.5; }
+  .card-note { font-size: 0.65rem; color: var(--warm-mid); font-style: italic; line-height: 1.5; margin-bottom: 8px; }
+  .delete-btn {
+    margin-top: 10px; padding: 4px 12px; font-size: 0.55rem; letter-spacing: 0.15em;
+    text-transform: uppercase; background: none; border: 1px solid var(--soft);
+    color: var(--warm-mid); cursor: pointer; border-radius: 2px; font-family: 'Montserrat', sans-serif; transition: all 0.18s;
+  }
+  .delete-btn:hover { border-color: var(--love); color: var(--love); }
+
+  .add-tag-row { display: flex; gap: 8px; margin-top: 8px; width: 100%; }
+  .tag-input {
+    flex: 1; padding: 5px 10px; border: 1px solid var(--soft); background: white;
+    font-family: 'Montserrat', sans-serif; font-size: 0.62rem; outline: none; border-radius: 2px; color: var(--ink);
+  }
+  .tag-input:focus { border-color: var(--warm-mid); }
+  .add-tag-btn {
+    padding: 5px 12px; background: var(--ink); color: var(--cream); border: none;
+    cursor: pointer; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+    border-radius: 2px; font-family: 'Montserrat', sans-serif;
+  }
 
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 36px; }
   .stat-card { background: white; padding: 28px; border-radius: 2px; box-shadow: 0 1px 3px rgba(26,25,22,0.06); }
@@ -213,20 +242,17 @@ export default function App() {
   const [queue, setQueue] = useState([])
   const [selected, setSelected] = useState(null)
   const [activeFilter, setActiveFilter] = useState(null)
+  const [activeCategory, setActiveCategory] = useState('all')
   const [search, setSearch] = useState('')
   const [modalNote, setModalNote] = useState('')
   const [modalReaction, setModalReaction] = useState(null)
   const [saving, setSaving] = useState(false)
   const [newTag, setNewTag] = useState('')
-  const [activeCategory, setActiveCategory] = useState('all')
 
   const nextId = useRef(Date.now())
   const processingRef = useRef(false)
 
-  // Load outfits from Supabase on mount
-  useEffect(() => {
-    loadOutfits()
-  }, [])
+  useEffect(() => { loadOutfits() }, [])
 
   async function loadOutfits() {
     setLoading(true)
@@ -238,7 +264,6 @@ export default function App() {
     setLoading(false)
   }
 
-  // Process upload queue one at a time
   useEffect(() => {
     const waiting = queue.find(q => q.status === 'waiting')
     if (!waiting || processingRef.current) return
@@ -250,7 +275,6 @@ export default function App() {
     setQueue(q => q.map(i => i.id === item.id ? { ...i, status: 'processing' } : i))
 
     try {
-      // 1. Upload image to Supabase Storage
       const ext = item.file.name.split('.').pop()
       const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
       const { error: uploadError } = await supabaseAdmin.storage
@@ -263,39 +287,27 @@ export default function App() {
         .from('outfit-images')
         .getPublicUrl(path)
 
-      // 2. AI tagging
-      const base64 = await new Promise(res => {
-        const reader = new FileReader()
-        reader.onload = () => res(reader.result.split(',')[1])
-        reader.readAsDataURL(item.file)
-      })
-
-      let tags = []
       const resp = await fetch('/api/analyse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-
-      body: JSON.stringify({ imageUrl: publicUrl })
-})
+        body: JSON.stringify({ imageUrl: publicUrl })
+      })
       const aiData = await resp.json()
-      const parsed = aiData
+      const t = aiData.tags || {}
+      const tags = [
+        ...(t.garments || []),
+        ...(t.colours || []),
+        ...(t.style || []),
+        ...(t.occasion || []),
+        ...(t.season || []),
+      ]
 
-      const t = parsed.tags || {}
-tags = [
-  ...(t.garments || []),
-  ...(t.colours || []),
-  ...(t.style || []),
-  ...(t.occasion || []),
-  ...(t.season || []),
-]
-
-
-      // 3. Save to Supabase database
       const { data: newOutfit, error: dbError } = await supabase
         .from('outfits')
         .insert({
           date: new Date().toISOString().slice(0, 10),
           tags,
+          categories: [],
           reaction: null,
           note: '',
           image_url: publicUrl,
@@ -315,14 +327,14 @@ tags = [
 
     processingRef.current = false
   }
-    async function deleteOutfit(outfit) {
-  if (!confirm('Delete this look?')) return
-  const path = outfit.image_url.split('/outfit-images/')[1]
-  await supabase.storage.from('outfit-images').remove([path])
-  await supabase.from('outfits').delete().eq('id', outfit.id)
-  setOutfits(prev => prev.filter(o => o.id !== outfit.id))
-}
 
+  async function deleteOutfit(outfit) {
+    if (!confirm('Delete this look?')) return
+    const path = outfit.image_url.split('/outfit-images/')[1]
+    await supabase.storage.from('outfit-images').remove([path])
+    await supabase.from('outfits').delete().eq('id', outfit.id)
+    setOutfits(prev => prev.filter(o => o.id !== outfit.id))
+  }
 
   function handleFiles(files) {
     const images = Array.from(files).filter(f => f.type.startsWith('image/'))
@@ -337,52 +349,36 @@ tags = [
     setView('upload')
   }
 
-  const allTags = [...new Set(outfits.flatMap(o => o.tags || []))].sort()
-
-  const filtered = outfits.filter(o => {
-    if (activeFilter && !(o.tags || []).includes(activeFilter)) return false
-    if (activeCategory !== 'all' && !(o.categories || []).includes(activeCategory)) return false
-
-    if (search) {
-      const s = search.toLowerCase()
-      if (!(o.tags || []).some(t => t.includes(s)) && !(o.note || '').toLowerCase().includes(s)) return false
-    }
-    return true
-  })
-
-  
-    function openModal(outfit) {
-  setSelected(outfit)
-  setModalNote(outfit.note || '')
-  setModalReaction(outfit.reaction || null)
-  setNewTag('')
-}
-
-async function toggleCategory(category) {
-  if (!selected) return
-  const current = selected.categories || []
-  const updated = current.includes(category)
-    ? current.filter(c => c !== category)
-    : [...current, category]
-  const { error } = await supabase.from('outfits').update({ categories: updated }).eq('id', selected.id)
-  if (!error) {
-    setOutfits(prev => prev.map(o => o.id === selected.id ? { ...o, categories: updated } : o))
-    setSelected(prev => ({ ...prev, categories: updated }))
-  }
-}
-
-  
-async function addTag(tag) {
-  if (!tag.trim() || !selected) return
-  const updatedTags = [...(selected.tags || []), tag.trim().toLowerCase()]
-  const { error } = await supabase.from('outfits').update({ tags: updatedTags }).eq('id', selected.id)
-  if (!error) {
-    setOutfits(prev => prev.map(o => o.id === selected.id ? { ...o, tags: updatedTags } : o))
-    setSelected(prev => ({ ...prev, tags: updatedTags }))
+  function openModal(outfit) {
+    setSelected(outfit)
+    setModalNote(outfit.note || '')
+    setModalReaction(outfit.reaction || null)
     setNewTag('')
   }
-}
 
+  async function toggleCategory(category) {
+    if (!selected) return
+    const current = selected.categories || []
+    const updated = current.includes(category)
+      ? current.filter(c => c !== category)
+      : [...current, category]
+    const { error } = await supabase.from('outfits').update({ categories: updated }).eq('id', selected.id)
+    if (!error) {
+      setOutfits(prev => prev.map(o => o.id === selected.id ? { ...o, categories: updated } : o))
+      setSelected(prev => ({ ...prev, categories: updated }))
+    }
+  }
+
+  async function addTag(tag) {
+    if (!tag.trim() || !selected) return
+    const updatedTags = [...(selected.tags || []), tag.trim().toLowerCase()]
+    const { error } = await supabase.from('outfits').update({ tags: updatedTags }).eq('id', selected.id)
+    if (!error) {
+      setOutfits(prev => prev.map(o => o.id === selected.id ? { ...o, tags: updatedTags } : o))
+      setSelected(prev => ({ ...prev, tags: updatedTags }))
+      setNewTag('')
+    }
+  }
 
   async function saveModal() {
     setSaving(true)
@@ -399,6 +395,18 @@ async function addTag(tag) {
     setSaving(false)
     setSelected(null)
   }
+
+  const allTags = [...new Set(outfits.flatMap(o => o.tags || []))].sort()
+
+  const filtered = outfits.filter(o => {
+    if (activeFilter && !(o.tags || []).includes(activeFilter)) return false
+    if (activeCategory !== 'all' && !(o.categories || []).includes(activeCategory)) return false
+    if (search) {
+      const s = search.toLowerCase()
+      if (!(o.tags || []).some(t => t.includes(s)) && !(o.note || '').toLowerCase().includes(s)) return false
+    }
+    return true
+  })
 
   const tagFreq = getTagFrequency(outfits)
   const maxFreq = tagFreq[0]?.[1] || 1
@@ -437,7 +445,6 @@ async function addTag(tag) {
                 <span className="upload-label">Drop your looks here</span>
                 <span className="upload-sub">Select multiple · jpg, png, heic</span>
               </label>
-
               {queue.length > 0 && (
                 <div className="queue">
                   {queue.map(item => (
@@ -445,7 +452,7 @@ async function addTag(tag) {
                       <img className="queue-thumb" src={item.preview} alt="" />
                       <span className="queue-name">{item.name}</span>
                       <span className={`queue-status ${item.status === 'done' ? 'done' : item.status === 'processing' ? 'processing' : ''}`}>
-                        {item.status === 'done' ? '✓ Saved' : item.status === 'processing' ? 'Analysing…' : item.status === 'error' ? '✕ Error' : 'Waiting'}
+                        {item.status === 'done' ? '✓ Saved' : item.status === 'processing' ? 'Analysing...' : item.status === 'error' ? '✕ Error' : 'Waiting'}
                       </span>
                     </div>
                   ))}
@@ -461,25 +468,24 @@ async function addTag(tag) {
               <div className="filter-bar">
                 <span className="filter-label">Filter</span>
                 <div className="category-tabs">
-  {['all', 'casual', 'business', 'party', 'inspiration'].map(cat => (
-    <button
-      key={cat}
-      className={`cat-tab ${activeCategory === cat ? 'active' : ''}`}
-      onClick={() => setActiveCategory(cat)}
-    >{cat}</button>
-  ))}
-</div>
-
+                  {['all', 'casual', 'business', 'party', 'inspiration'].map(cat => (
+                    <button
+                      key={cat}
+                      className={`cat-tab ${activeCategory === cat ? 'active' : ''}`}
+                      onClick={() => setActiveCategory(cat)}
+                    >{cat}</button>
+                  ))}
+                </div>
                 {allTags.slice(0, 14).map(t => (
                   <button key={t} className={`filter-tag ${activeFilter === t ? 'active' : ''}`}
                     onClick={() => setActiveFilter(activeFilter === t ? null : t)}>{t}</button>
                 ))}
-                <input className="search-input" placeholder="Search tags, notes…"
+                <input className="search-input" placeholder="Search tags, notes..."
                   value={search} onChange={e => setSearch(e.target.value)} />
               </div>
 
               {loading ? (
-                <div className="loading"><div className="loading-text">Loading your wardrobe…</div></div>
+                <div className="loading"><div className="loading-text">Loading your wardrobe...</div></div>
               ) : filtered.length === 0 ? (
                 <div className="empty">
                   <div className="empty-title">{outfits.length === 0 ? 'Nothing here yet' : 'No matches'}</div>
@@ -488,7 +494,7 @@ async function addTag(tag) {
               ) : (
                 <div className="grid">
                   {filtered.map(outfit => (
-                    <div key={outfit.id} className="card" onClick={() => openModal(outfit)}>
+                    <div key={outfit.id} className={`card ${(outfit.categories || []).includes('inspiration') ? 'inspiration' : ''}`} onClick={() => openModal(outfit)}>
                       {outfit.image_url && <img className="card-img" src={outfit.image_url} alt="outfit" />}
                       <div className="card-body">
                         <div className="card-top">
@@ -501,9 +507,8 @@ async function addTag(tag) {
                           {(outfit.tags || []).slice(0, 4).map(t => <span key={t} className="tag">{t}</span>)}
                           {(outfit.tags || []).length > 4 && <span className="tag">+{outfit.tags.length - 4}</span>}
                         </div>
-                       {outfit.note && <div className="card-note">{outfit.note}</div>}
-<button className="delete-btn" onClick={(e) => { e.stopPropagation(); deleteOutfit(outfit); }}>Delete</button>
-
+                        {outfit.note && <div className="card-note">{outfit.note}</div>}
+                        <button className="delete-btn" onClick={(e) => { e.stopPropagation(); deleteOutfit(outfit); }}>Delete</button>
                       </div>
                     </div>
                   ))}
@@ -563,31 +568,31 @@ async function addTag(tag) {
               <div className="modal-body">
                 <div className="modal-header">
                   <div className="modal-date">{selected.date}</div>
-                  <button className="modal-close" onClick={() => setSelected(null)}>✕</button>
+                  <button className="modal-close" onClick={() => setSelected(null)}>x</button>
                 </div>
                 <div>
                   <div className="modal-section-label">Tags</div>
                   <div className="modal-tags">
                     {(selected.tags || []).map(t => <span key={t} className="tag">{t}</span>)}
-<div className="add-tag-row">
-  <input className="tag-input" placeholder="Add a tag..." value={newTag} onChange={e => setNewTag(e.target.value)} />
-  <button className="add-tag-btn" onClick={() => addTag(newTag)}>Add</button>
-</div>
-
+                  </div>
+                  <div className="add-tag-row">
+                    <input className="tag-input" placeholder="Add a tag..." value={newTag} onChange={e => setNewTag(e.target.value)} />
+                    <button className="add-tag-btn" onClick={() => addTag(newTag)}>Add</button>
                   </div>
                 </div>
                 <div>
                   <div className="modal-section-label">Categories</div>
-<div className="category-row">
-  {['casual', 'business', 'party', 'inspiration'].map(cat => (
-    <button
-      key={cat}
-      className={`cat-btn ${(selected.categories || []).includes(cat) ? 'active' : ''}`}
-      onClick={() => toggleCategory(cat)}
-    >{cat}</button>
-  ))}
-</div>
-
+                  <div className="category-row">
+                    {['casual', 'business', 'party', 'inspiration'].map(cat => (
+                      <button
+                        key={cat}
+                        className={`cat-btn ${(selected.categories || []).includes(cat) ? 'active' : ''}`}
+                        onClick={() => toggleCategory(cat)}
+                      >{cat}</button>
+                    ))}
+                  </div>
+                </div>
+                <div>
                   <div className="modal-section-label">Reaction</div>
                   <div className="reaction-row">
                     <button className={`reaction-btn love ${modalReaction === 'love' ? 'active' : ''}`}
@@ -599,11 +604,11 @@ async function addTag(tag) {
                 <div>
                   <div className="modal-section-label">Notes</div>
                   <textarea className="notes-input"
-                    placeholder="How did you feel in this? What worked, what didn't…"
+                    placeholder="How did you feel in this? What worked, what didn't..."
                     value={modalNote} onChange={e => setModalNote(e.target.value)} />
                 </div>
                 <button className="save-btn" onClick={saveModal} disabled={saving}>
-                  {saving ? 'Saving…' : 'Save Look'}
+                  {saving ? 'Saving...' : 'Save Look'}
                 </button>
               </div>
             </div>
