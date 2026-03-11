@@ -1,40 +1,6 @@
-import sharp from "sharp";
-
 export const config = {
   maxDuration: 60,
 };
-
-// ── Image compression ────────────────────────────────────────────────────────
-// Resizes to max 1500px on the longest side and compresses to JPEG ~80 quality.
-// Only runs if the image exceeds 4.5 MB — small images are passed through as-is.
-
-const MAX_BYTES = 4.5 * 1024 * 1024; // 4.5 MB
-const MAX_DIMENSION = 1500;           // px
-
-async function compressImageIfNeeded(buffer, originalMediaType) {
-  if (buffer.byteLength <= MAX_BYTES) {
-    // Small enough — no compression needed
-    return { buffer, mediaType: originalMediaType };
-  }
-
-  console.log(
-    `[analyse] Image is ${(buffer.byteLength / 1024 / 1024).toFixed(2)} MB — compressing...`
-  );
-
-  const compressed = await sharp(buffer)
-    .resize(MAX_DIMENSION, MAX_DIMENSION, {
-      fit: "inside",          // preserve aspect ratio, never upscale
-      withoutEnlargement: true,
-    })
-    .jpeg({ quality: 80 })
-    .toBuffer();
-
-  console.log(
-    `[analyse] Compressed to ${(compressed.byteLength / 1024 / 1024).toFixed(2)} MB`
-  );
-
-  return { buffer: compressed, mediaType: "image/jpeg" };
-}
 
 // ── Handler ──────────────────────────────────────────────────────────────────
 
@@ -73,15 +39,8 @@ export default async function handler(req, res) {
     }
 
     const arrayBuffer = await imgResponse.arrayBuffer();
-    const rawBuffer = Buffer.from(arrayBuffer);
-    console.log("[analyse] Image fetched, size:", rawBuffer.byteLength, "bytes, type:", mediaType);
-
-    // ── Compress if needed ─────────────────────────────────────────────────
-    const { buffer: finalBuffer, mediaType: finalMediaType } =
-      await compressImageIfNeeded(rawBuffer, mediaType);
-
-    mediaType = finalMediaType;
-    imageBase64 = finalBuffer.toString("base64");
+    imageBase64 = Buffer.from(arrayBuffer).toString("base64");
+    console.log("[analyse] Image fetched, size:", arrayBuffer.byteLength, "bytes, type:", mediaType);
   } catch (err) {
     console.error("[analyse] Image fetch error:", err);
     return res.status(502).json({ error: "Failed to fetch image", detail: err.message });
