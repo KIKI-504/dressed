@@ -230,14 +230,13 @@ const STYLE = `
   .door-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 760px; margin: 36px auto 0; position: relative; }
 
   .door-wrapper { position: relative; aspect-ratio: 3/4; cursor: pointer; user-select: none; }
-  .door-interior { position: absolute; inset: 0; border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+ .door-interior { position: absolute; inset: 0; border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center; z-index: 1; }
   .interior-business { background: linear-gradient(160deg, #1a1a2e 0%, #2d2520 60%, #1C1C2E 100%); }
   .interior-casual { background: linear-gradient(160deg, #3d5a7a 0%, #2a3f5c 50%, #1e3a5f 100%); }
   .interior-party { background: linear-gradient(160deg, #2d1a0e 0%, #1a0e2e 50%, #3d1a2e 100%); }
   .interior-inspiration { background: linear-gradient(160deg, #2a2520 0%, #3d3228 50%, #2a2520 100%); }
 
-  .interior-content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease 0.2s; }
-  .door-wrapper.open .interior-content { opacity: 1; }
+  .interior-content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 1; }
 
   .blazer-hanger { display: flex; flex-direction: column; align-items: center; width: 60%; }
   .hanger-hook { width: 2px; height: 24px; background: linear-gradient(180deg, #C8A86B, #A08040); margin: 0 auto; }
@@ -277,7 +276,7 @@ const STYLE = `
   .hinge-bottom { bottom: 15%; }
   .door-wrapper.open .hinge { filter: brightness(1.2); }
 
-  .door-panels { position: absolute; inset: 0; z-index: 4; }
+  .door-panels { position: absolute; inset: 0; z-index: 2; }
   .door-panel { position: absolute; top: 0; width: 50%; height: 100%; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); overflow: hidden; }
   .door-panel-left { left: 0; transform-origin: left center; background: linear-gradient(90deg, #C8BC9E 0%, #DDD3C0 30%, #E8E0CE 70%, #DDD3C0 100%); }
   .door-panel-right { right: 0; transform-origin: right center; background: linear-gradient(270deg, #C8BC9E 0%, #DDD3C0 30%, #E8E0CE 70%, #DDD3C0 100%); }
