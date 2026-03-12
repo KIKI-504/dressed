@@ -37,7 +37,9 @@ const STYLE = `
   }
   .nav-btn:hover, .nav-btn.active { color: var(--ink); border-bottom-color: var(--accent); }
 
-  .main { flex: 1; padding: 0 48px 48px; }
+  .main { flex: 1; }
+
+  .inner-pad { padding: 0 48px 48px; }
 
   .upload-section { padding: 48px 0 32px; }
   .upload-intro {
@@ -218,83 +220,232 @@ const STYLE = `
     font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic;
     color: var(--warm-mid); animation: pulse 1.8s ease-in-out infinite;
   }
-.home-page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 52px 24px 60px; }
-  .home-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(56px, 10vw, 88px); color: var(--ink); letter-spacing: -0.01em; line-height: 1; text-align: center; }
-  .home-logo-rule { display: block; width: 72px; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 8px auto 0; }
+
+  /* ── HOME PAGE ── */
+  .home-page {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; padding: 52px 24px 80px;
+  }
+  .home-logo {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+    font-size: clamp(56px, 10vw, 88px); color: var(--ink); letter-spacing: -0.01em;
+    line-height: 1; text-align: center;
+  }
+  .home-logo-rule {
+    display: block; width: 72px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    margin: 8px auto 0;
+  }
   .home-tagline { font-size: 13px; letter-spacing: 0.12em; color: var(--warm-mid); margin-top: 14px; text-align: center; }
   .home-stats { margin-top: 16px; display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--warm-mid); }
   .home-looks-count span { color: var(--accent); font-weight: 500; }
-  .home-upload-link { color: var(--accent); background: none; border: none; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 0.12em; padding: 0; }
+  .home-upload-link {
+    color: var(--accent); background: none; border: none; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 0.12em; padding: 0;
+  }
   .home-upload-link:hover { color: var(--ink); }
 
-  .door-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 760px; margin: 36px auto 0; position: relative; }
+  /* ── DOOR GRID ── */
+  .door-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    width: 100%; max-width: 760px; margin: 36px auto 0; position: relative;
+  }
 
-  .door-wrapper { position: relative; aspect-ratio: 3/4; cursor: pointer; user-select: none; }
- .door-interior { position: absolute; inset: 0; border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center; z-index: 1; }
-  .interior-business { background: linear-gradient(160deg, #1a1a2e 0%, #2d2520 60%, #1C1C2E 100%); }
-  .interior-casual { background: linear-gradient(160deg, #3d5a7a 0%, #2a3f5c 50%, #1e3a5f 100%); }
-  .interior-party { background: linear-gradient(160deg, #2d1a0e 0%, #1a0e2e 50%, #3d1a2e 100%); }
+  /* ── DOOR WRAPPER ── */
+  .door-wrapper {
+    position: relative; aspect-ratio: 3/4; cursor: pointer; user-select: none;
+  }
+
+  /* ── INTERIOR (sits at the back, always visible) ── */
+  .door-interior {
+    position: absolute; inset: 0; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1;
+  }
+  .interior-business  { background: linear-gradient(160deg, #1a1a2e 0%, #2d2520 60%, #1C1C2E 100%); }
+  .interior-casual    { background: linear-gradient(160deg, #3d5a7a 0%, #2a3f5c 50%, #1e3a5f 100%); }
+  .interior-party     { background: linear-gradient(160deg, #2d1a0e 0%, #1a0e2e 50%, #3d1a2e 100%); }
   .interior-inspiration { background: linear-gradient(160deg, #2a2520 0%, #3d3228 50%, #2a2520 100%); }
 
-  .interior-content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 1; }
+  .interior-content {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
 
+  /* ── CLOTHING ITEMS ── */
   .blazer-hanger { display: flex; flex-direction: column; align-items: center; width: 60%; }
   .hanger-hook { width: 2px; height: 24px; background: linear-gradient(180deg, #C8A86B, #A08040); margin: 0 auto; }
   .hanger-bar { width: 70%; height: 2px; background: linear-gradient(90deg, #A08040, #C8A86B, #A08040); }
-  .blazer-body { width: 100%; height: 70px; background: linear-gradient(180deg, #1a1a3e 0%, #0d0d25 100%); border-radius: 2px 2px 8px 8px; margin-top: 2px; box-shadow: -4px 4px 16px rgba(0,0,0,0.5); position: relative; }
-  .blazer-lapel-left { position: absolute; top: 0; left: 0; width: 40%; height: 36px; background: linear-gradient(135deg, #22225a, #1a1a3e); clip-path: polygon(0 0, 100% 0, 60% 100%, 0 100%); }
-  .blazer-lapel-right { position: absolute; top: 0; right: 0; width: 40%; height: 36px; background: linear-gradient(225deg, #22225a, #1a1a3e); clip-path: polygon(0 0, 100% 0, 100% 100%, 40% 100%); }
+  .blazer-body {
+    width: 100%; height: 70px; background: linear-gradient(180deg, #1a1a3e 0%, #0d0d25 100%);
+    border-radius: 2px 2px 8px 8px; margin-top: 2px;
+    box-shadow: -4px 4px 16px rgba(0,0,0,0.5); position: relative;
+  }
+  .blazer-lapel-left {
+    position: absolute; top: 0; left: 0; width: 40%; height: 36px;
+    background: linear-gradient(135deg, #22225a, #1a1a3e);
+    clip-path: polygon(0 0, 100% 0, 60% 100%, 0 100%);
+  }
+  .blazer-lapel-right {
+    position: absolute; top: 0; right: 0; width: 40%; height: 36px;
+    background: linear-gradient(225deg, #22225a, #1a1a3e);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 40% 100%);
+  }
 
   .casual-items { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 70%; }
-  .denim-fold { width: 100%; height: 44px; background: linear-gradient(180deg, #3d5a8a 0%, #2a4070 100%); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+  .denim-fold {
+    width: 100%; height: 44px; background: linear-gradient(180deg, #3d5a8a 0%, #2a4070 100%);
+    border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
   .sneaker-pair { display: flex; gap: 4px; width: 80%; }
-  .sneaker { flex: 1; height: 20px; background: linear-gradient(135deg, #f0ede8, #d8d4cc); border-radius: 20px 20px 4px 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+  .sneaker {
+    flex: 1; height: 20px; background: linear-gradient(135deg, #f0ede8, #d8d4cc);
+    border-radius: 20px 20px 4px 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
 
   .party-items { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 70%; }
-  .sequin-fabric { width: 100%; height: 50px; background: linear-gradient(135deg, #8B0E4E, #C41E3A, #6B0E4E); border-radius: 4px; overflow: hidden; box-shadow: 0 4px 16px rgba(139,14,78,0.4); position: relative; }
-  .sequin-shimmer { position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%); animation: shimmer 3s ease-in-out infinite; }
+  .sequin-fabric {
+    width: 100%; height: 50px;
+    background: linear-gradient(135deg, #8B0E4E, #C41E3A, #6B0E4E);
+    border-radius: 4px; overflow: hidden;
+    box-shadow: 0 4px 16px rgba(139,14,78,0.4); position: relative;
+  }
+  .sequin-shimmer {
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    animation: shimmer 3s ease-in-out infinite;
+  }
   @keyframes shimmer { 0%,100%{transform:translateX(-100%)} 50%{transform:translateX(100%)} }
   .heel-pair { display: flex; gap: 6px; align-items: flex-end; }
   .heel { width: 18px; height: 28px; position: relative; }
-  .heel-body { width: 100%; height: 16px; background: linear-gradient(135deg, #8B7355, #6B5335); border-radius: 4px 8px 0 0; position: absolute; top: 0; }
-  .heel-stem { width: 3px; height: 14px; background: linear-gradient(180deg, #6B5335, #4A3520); position: absolute; bottom: 0; right: 4px; border-radius: 0 0 2px 2px; }
+  .heel-body {
+    width: 100%; height: 16px; background: linear-gradient(135deg, #8B7355, #6B5335);
+    border-radius: 4px 8px 0 0; position: absolute; top: 0;
+  }
+  .heel-stem {
+    width: 3px; height: 14px; background: linear-gradient(180deg, #6B5335, #4A3520);
+    position: absolute; bottom: 0; right: 4px; border-radius: 0 0 2px 2px;
+  }
 
   .moodboard { width: 80%; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
   .pin-card { height: 30px; border-radius: 2px; position: relative; box-shadow: 1px 2px 6px rgba(0,0,0,0.3); }
-  .pin-card::before { content: ''; position: absolute; top: 2px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--accent); z-index: 2; }
+  .pin-card::before {
+    content: ''; position: absolute; top: 2px; left: 50%; transform: translateX(-50%);
+    width: 5px; height: 5px; border-radius: 50%; background: var(--accent); z-index: 2;
+  }
   .pin-1 { background: linear-gradient(135deg, #E8DDD0, #D4C8B4); }
   .pin-2 { background: linear-gradient(135deg, #C4B8A0, #B0A488); }
   .pin-3 { background: linear-gradient(135deg, #A8B4C0, #8A9AAA); }
   .pin-4 { background: linear-gradient(135deg, #D4C0A8, #BCA890); }
 
-  .interior-label { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .interior-label {
+    position: absolute; bottom: 12px; left: 0; right: 0; text-align: center;
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
 
-  .door-frame { position: absolute; inset: 0; border: 2px solid #C8BC9E; border-radius: 4px; box-shadow: 0 8px 32px rgba(44,36,32,0.15), 0 2px 8px rgba(44,36,32,0.08), inset 0 1px 0 rgba(255,255,255,0.5); z-index: 3; pointer-events: none; }
-  .hinge { position: absolute; left: -1px; width: 12px; height: 20px; background: linear-gradient(180deg, #D4AF7A, #B8975A, #C8A86B); border-radius: 2px; z-index: 10; box-shadow: 1px 0 4px rgba(0,0,0,0.2); transition: filter 0.3s; }
-  .hinge::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 4px; height: 4px; border-radius: 50%; background: #8B6914; }
+  /* ── DOOR FRAME (decorative border, highest z so it stays crisp) ── */
+  .door-frame {
+    position: absolute; inset: 0; border: 2px solid #C8BC9E; border-radius: 4px;
+    box-shadow: 0 8px 32px rgba(44,36,32,0.18), 0 2px 8px rgba(44,36,32,0.10),
+      inset 0 1px 0 rgba(255,255,255,0.5);
+    z-index: 10; pointer-events: none;
+  }
+
+  /* ── GOLD HINGES ── */
+  .hinge {
+    position: absolute; left: -1px; width: 12px; height: 20px;
+    background: linear-gradient(180deg, #D4AF7A, #B8975A, #C8A86B);
+    border-radius: 2px; z-index: 11; box-shadow: 1px 0 4px rgba(0,0,0,0.2);
+    transition: filter 0.3s;
+  }
+  .hinge::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%); width: 4px; height: 4px;
+    border-radius: 50%; background: #8B6914;
+  }
   .hinge-top { top: 15%; }
   .hinge-bottom { bottom: 15%; }
-  .door-wrapper.open .hinge { filter: brightness(1.2); }
+  .door-wrapper.open .hinge { filter: brightness(1.3); }
 
-  .door-panels { position: absolute; inset: 0; z-index: 2; }
-  .door-panel { position: absolute; top: 0; width: 50%; height: 100%; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); overflow: hidden; }
-  .door-panel-left { left: 0; transform-origin: left center; background: linear-gradient(90deg, #C8BC9E 0%, #DDD3C0 30%, #E8E0CE 70%, #DDD3C0 100%); }
-  .door-panel-right { right: 0; transform-origin: right center; background: linear-gradient(270deg, #C8BC9E 0%, #DDD3C0 30%, #E8E0CE 70%, #DDD3C0 100%); }
-  .door-panel::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.02) 3px, rgba(0,0,0,0.02) 4px), repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.02) 3px, rgba(0,0,0,0.02) 4px); }
-  .door-wrapper.open .door-panel-left { transform: perspective(800px) rotateY(-22deg); }
-  .door-wrapper.open .door-panel-right { transform: perspective(800px) rotateY(22deg); }
+  /* ── DOOR PANELS (sit above interior, swing away on open) ── */
+  .door-panels { position: absolute; inset: 0; z-index: 5; }
 
-  .door-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: clamp(10px, 2vw, 14px); letter-spacing: 0.3em; color: rgba(250,247,242,0.9); text-shadow: 0 1px 4px rgba(44,36,32,0.3); z-index: 5; pointer-events: none; text-transform: uppercase; font-weight: 300; transition: opacity 0.3s; }
+  .door-panel {
+    position: absolute; top: 0; width: 50%; height: 100%;
+    transition: transform 0.65s cubic-bezier(0.4,0,0.2,1);
+    /* NO overflow:hidden — lets the 3D fold render cleanly */
+  }
+  .door-panel-left {
+    left: 0; transform-origin: left center;
+    background: linear-gradient(90deg, #C8BC9E 0%, #DDD3C0 30%, #E8E0CE 70%, #DDD3C0 100%);
+  }
+  .door-panel-right {
+    right: 0; transform-origin: right center;
+    background: linear-gradient(270deg, #C8BC9E 0%, #DDD3C0 30%, #E8E0CE 70%, #DDD3C0 100%);
+  }
+
+  /* linen weave texture */
+  .door-panel::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 4px),
+      repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 4px);
+  }
+
+  /* centre-seam shadow for depth */
+  .door-panel-left::after {
+    content: ''; position: absolute; right: 0; top: 0; bottom: 0;
+    width: 6px; background: linear-gradient(90deg, transparent, rgba(44,36,32,0.1));
+  }
+  .door-panel-right::after {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 6px; background: linear-gradient(270deg, transparent, rgba(44,36,32,0.1));
+  }
+
+  /* open state — swing each panel ~22deg */
+  .door-wrapper.open .door-panel-left  { transform: perspective(900px) rotateY(-22deg); }
+  .door-wrapper.open .door-panel-right { transform: perspective(900px) rotateY(22deg); }
+
+  /* ── DOOR LABEL ── */
+  .door-label {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: clamp(10px, 2vw, 14px); letter-spacing: 0.3em;
+    color: rgba(250,247,242,0.9); text-shadow: 0 1px 4px rgba(44,36,32,0.3);
+    z-index: 6; pointer-events: none; text-transform: uppercase; font-weight: 300;
+    transition: opacity 0.25s;
+  }
   .door-wrapper.open .door-label { opacity: 0; }
 
-  .handle-body { width: 9px; height: 26px; background: linear-gradient(135deg, #D4AF7A 0%, #B8975A 40%, #C8A86B 60%, #A08040 100%); border-radius: 20px; box-shadow: 1px 2px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3); }
-  .door-handle { position: absolute; z-index: 6; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
-  .handle-left { right: 2px; top: 50%; transform: translateY(-50%); transform-origin: right center; }
-  .handle-right { left: 2px; top: 50%; transform: translateY(-50%); transform-origin: left center; }
-  .door-wrapper.open .handle-left { transform: perspective(800px) translateY(-50%) rotateY(-22deg); }
-  .door-wrapper.open .handle-right { transform: perspective(800px) translateY(-50%) rotateY(22deg); }
+  /* ── BRASS HANDLES ── */
+  .handle-body {
+    width: 9px; height: 26px;
+    background: linear-gradient(160deg, #E2C078 0%, #C8A858 25%, #B8935A 50%, #C8A858 75%, #E2C078 100%);
+    border-radius: 20px;
+    box-shadow: 1px 2px 5px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.35),
+      inset 1px 0 0 rgba(255,255,255,0.15);
+  }
+  .door-handle { position: absolute; z-index: 7; transition: transform 0.65s cubic-bezier(0.4,0,0.2,1); }
+  .handle-left  { right: 4px; top: 50%; transform: translateY(-50%); transform-origin: right center; }
+  .handle-right { left: 4px; top: 50%; transform: translateY(-50%); transform-origin: left center; }
+  .door-wrapper.open .handle-left  { transform: perspective(900px) translateY(-50%) rotateY(-22deg); }
+  .door-wrapper.open .handle-right { transform: perspective(900px) translateY(-50%) rotateY(22deg); }
 
-  .scrapbook-zone { position: absolute; bottom: -24px; right: -20px; width: 200px; transform: rotate(2deg); z-index: 10; filter: drop-shadow(0 8px 24px rgba(44,36,32,0.2)); }
+  /* ── HINT TEXT WHEN OPEN ── */
+  .door-open-hint {
+    position: absolute; bottom: 16px; left: 0; right: 0; text-align: center;
+    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); z-index: 3; pointer-events: none;
+    opacity: 0; transition: opacity 0.3s ease 0.4s;
+  }
+  .door-wrapper.open .door-open-hint { opacity: 1; }
+
+  /* ── SCRAPBOOK ── */
+  .scrapbook-zone {
+    position: absolute; bottom: -24px; right: -20px; width: 200px;
+    transform: rotate(2deg); z-index: 10;
+    filter: drop-shadow(0 8px 24px rgba(44,36,32,0.2));
+  }
   .polaroid-stack { position: relative; width: 100%; height: 150px; }
   .polaroid { position: absolute; background: white; padding: 7px 7px 24px; box-shadow: 2px 4px 16px rgba(44,36,32,0.2); }
   .polaroid-1 { width: 90px; height: 110px; bottom: 10px; left: 5px; transform: rotate(-8deg); }
@@ -310,8 +461,12 @@ const STYLE = `
   .fashion-in-motion { font-size: 8px; letter-spacing: 0.25em; color: var(--warm-mid); text-transform: uppercase; display: block; font-weight: 300; }
   .upload-moments { font-size: 13px; color: var(--accent); display: block; margin-top: 2px; font-style: italic; font-family: 'Cormorant Garamond', serif; }
 
+  /* ── RECENT LOOKS ── */
   .recent-strip { width: 100%; max-width: 760px; margin: 80px auto 0; }
-  .recent-label { font-size: 10px; letter-spacing: 0.35em; color: var(--accent); text-transform: uppercase; font-weight: 300; margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
+  .recent-label {
+    font-size: 10px; letter-spacing: 0.35em; color: var(--accent); text-transform: uppercase;
+    font-weight: 300; margin-bottom: 16px; display: flex; align-items: center; gap: 14px;
+  }
   .recent-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--soft), transparent); }
   .editorial-grid { display: grid; grid-template-columns: 1.8fr 1fr; grid-template-rows: auto auto; gap: 10px; }
   .look-card { position: relative; overflow: hidden; border-radius: 2px; cursor: pointer; background: var(--soft); }
@@ -324,9 +479,10 @@ const STYLE = `
   .look-meta { position: absolute; bottom: 10px; left: 12px; right: 12px; opacity: 0; transform: translateY(4px); transition: all 0.4s; }
   .look-card:hover .look-meta { opacity: 1; transform: translateY(0); }
   .look-tag { font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); padding: 3px 7px; border-radius: 20px; color: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,0.2); margin-right: 4px; }
+
   @media (max-width: 640px) {
     .header { padding: 20px 20px 16px; }
-    .main { padding: 0 20px 40px; }
+    .inner-pad { padding: 0 20px 40px; }
     .modal { grid-template-columns: 1fr; }
     .modal-img { min-height: 240px; }
     .stats-grid { grid-template-columns: 1fr; }
@@ -340,51 +496,39 @@ function getTagFrequency(outfits) {
   return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 10)
 }
 
-// ── Image compression ────────────────────────────────────────────────────────
-// Resizes to max 1500px on the longest side and compresses to JPEG at 80%
-// quality. Runs entirely in the browser — no dependencies needed.
-// Only compresses if the file is over 4.5 MB; smaller files are returned as-is.
-
-const MAX_BYTES = 4.5 * 1024 * 1024 // 4.5 MB
-const MAX_DIMENSION = 1500           // px
+const MAX_BYTES = 4.5 * 1024 * 1024
+const MAX_DIMENSION = 1500
 
 async function compressImage(file) {
-  if (file.size <= MAX_BYTES) return file // small enough, skip
-
+  if (file.size <= MAX_BYTES) return file
   return new Promise((resolve) => {
     const img = new Image()
     const url = URL.createObjectURL(file)
-
     img.onload = () => {
       URL.revokeObjectURL(url)
-
-      // Work out new dimensions, capping the longest side at MAX_DIMENSION
       let { width, height } = img
       if (width > height) {
         if (width > MAX_DIMENSION) { height = Math.round(height * MAX_DIMENSION / width); width = MAX_DIMENSION }
       } else {
         if (height > MAX_DIMENSION) { width = Math.round(width * MAX_DIMENSION / height); height = MAX_DIMENSION }
       }
-
       const canvas = document.createElement('canvas')
       canvas.width = width
       canvas.height = height
       canvas.getContext('2d').drawImage(img, 0, 0, width, height)
-
       canvas.toBlob(
         (blob) => {
-          // Give it a clean filename with .jpg extension
           const name = file.name.replace(/\.[^.]+$/, '') + '.jpg'
           resolve(new File([blob], name, { type: 'image/jpeg' }))
         },
         'image/jpeg',
-        0.8 // 80% quality
+        0.8
       )
     }
-
     img.src = url
   })
 }
+
 function HomePage({ outfits, onDoorClick, onUploadClick }) {
   const [openDoor, setOpenDoor] = useState(null)
   const recentThree = outfits.slice(0, 3)
@@ -401,16 +545,21 @@ function HomePage({ outfits, onDoorClick, onUploadClick }) {
     const isOpen = openDoor === id
     return (
       <div className={`door-wrapper ${isOpen ? 'open' : ''}`} onClick={() => handleDoorClick(id)}>
+        {/* Interior — always rendered behind the panels */}
         <div className={`door-interior interior-${id}`}>
           <div className="interior-content">
             {interior}
-            <p className="interior-label">{label}</p>
           </div>
+          <div className="door-open-hint">tap again to enter</div>
         </div>
+
+        {/* Decorative frame + hinges — sits on top of everything as a border */}
         <div className="door-frame">
           <div className="hinge hinge-top"></div>
           <div className="hinge hinge-bottom"></div>
         </div>
+
+        {/* The two swinging panels */}
         <div className="door-panels">
           <div className="door-panel door-panel-left">
             <div className="door-label">{label}</div>
@@ -551,8 +700,9 @@ function HomePage({ outfits, onDoorClick, onUploadClick }) {
     </div>
   )
 }
+
 export default function App() {
- const [view, setView] = useState('home')
+  const [view, setView] = useState('home')
   const [outfits, setOutfits] = useState([])
   const [loading, setLoading] = useState(true)
   const [queue, setQueue] = useState([])
@@ -589,20 +739,16 @@ export default function App() {
   async function processItem(item) {
     processingRef.current = true
     setQueue(q => q.map(i => i.id === item.id ? { ...i, status: 'processing' } : i))
-
     try {
       const ext = item.file.name.split('.').pop()
       const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
       const { error: uploadError } = await supabaseAdmin.storage
         .from('outfit-images')
         .upload(path, item.file, { contentType: item.file.type })
-
       if (uploadError) throw uploadError
-
       const { data: { publicUrl } } = supabaseAdmin.storage
         .from('outfit-images')
         .getPublicUrl(path)
-
       const resp = await fetch('/api/analyse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -617,7 +763,6 @@ export default function App() {
         ...(t.occasion || []),
         ...(t.season || []),
       ]
-
       const { data: newOutfit, error: dbError } = await supabase
         .from('outfits')
         .insert({
@@ -630,17 +775,13 @@ export default function App() {
         })
         .select()
         .single()
-
       if (dbError) throw dbError
-
       setOutfits(prev => [newOutfit, ...prev])
       setQueue(q => q.map(i => i.id === item.id ? { ...i, status: 'done' } : i))
-
     } catch (e) {
       console.error(e)
       setQueue(q => q.map(i => i.id === item.id ? { ...i, status: 'error' } : i))
     }
-
     processingRef.current = false
   }
 
@@ -654,10 +795,7 @@ export default function App() {
 
   async function handleFiles(files) {
     const images = Array.from(files).filter(f => f.type.startsWith('image/'))
-
-    // Compress each image before adding to the queue
     const compressed = await Promise.all(images.map(compressImage))
-
     const newItems = compressed.map(file => ({
       id: nextId.current++,
       file,
@@ -706,7 +844,6 @@ export default function App() {
       .from('outfits')
       .update({ note: modalNote, reaction: modalReaction })
       .eq('id', selected.id)
-
     if (!error) {
       setOutfits(prev => prev.map(o =>
         o.id === selected.id ? { ...o, note: modalNote, reaction: modalReaction } : o
@@ -717,7 +854,6 @@ export default function App() {
   }
 
   const allTags = [...new Set(outfits.flatMap(o => o.tags || []))].sort()
-
   const filtered = outfits.filter(o => {
     if (activeFilter && !(o.tags || []).includes(activeFilter)) return false
     if (activeCategory !== 'all' && !(o.categories || []).includes(activeCategory)) return false
@@ -753,7 +889,8 @@ export default function App() {
         </header>
 
         <main className="main">
-{/* HOME */}
+
+          {/* HOME */}
           {view === 'home' && (
             <HomePage
               outfits={outfits}
@@ -761,37 +898,40 @@ export default function App() {
               onUploadClick={() => setView('upload')}
             />
           )}
+
           {/* UPLOAD */}
           {view === 'upload' && (
-            <div className="upload-section">
-              <div className="page-title" style={{ marginBottom: 16 }}>Add Looks</div>
-              <p className="upload-intro">Drop in one photo or a whole batch — each will be analysed and tagged automatically.</p>
-              <label className="upload-area">
-                <input className="upload-input" type="file" accept="image/*" multiple
-                  onChange={e => { if (e.target.files.length) handleFiles(e.target.files) }} />
-                <div className="upload-icon">✦</div>
-                <span className="upload-label">Drop your looks here</span>
-                <span className="upload-sub">Select multiple · jpg, png, heic</span>
-              </label>
-              {queue.length > 0 && (
-                <div className="queue">
-                  {queue.map(item => (
-                    <div key={item.id} className="queue-item">
-                      <img className="queue-thumb" src={item.preview} alt="" />
-                      <span className="queue-name">{item.name}</span>
-                      <span className={`queue-status ${item.status === 'done' ? 'done' : item.status === 'processing' ? 'processing' : ''}`}>
-                        {item.status === 'done' ? '✓ Saved' : item.status === 'processing' ? 'Analysing...' : item.status === 'error' ? '✕ Error' : 'Waiting'}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
+            <div className="inner-pad">
+              <div className="upload-section">
+                <div className="page-title" style={{ marginBottom: 16 }}>Add Looks</div>
+                <p className="upload-intro">Drop in one photo or a whole batch — each will be analysed and tagged automatically.</p>
+                <label className="upload-area">
+                  <input className="upload-input" type="file" accept="image/*" multiple
+                    onChange={e => { if (e.target.files.length) handleFiles(e.target.files) }} />
+                  <div className="upload-icon">✦</div>
+                  <span className="upload-label">Drop your looks here</span>
+                  <span className="upload-sub">Select multiple · jpg, png, heic</span>
+                </label>
+                {queue.length > 0 && (
+                  <div className="queue">
+                    {queue.map(item => (
+                      <div key={item.id} className="queue-item">
+                        <img className="queue-thumb" src={item.preview} alt="" />
+                        <span className="queue-name">{item.name}</span>
+                        <span className={`queue-status ${item.status === 'done' ? 'done' : item.status === 'processing' ? 'processing' : ''}`}>
+                          {item.status === 'done' ? '✓ Saved' : item.status === 'processing' ? 'Analysing...' : item.status === 'error' ? '✕ Error' : 'Waiting'}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
           {/* WARDROBE */}
           {view === 'wardrobe' && (
-            <>
+            <div className="inner-pad">
               <div className="page-title">Emery's Looks</div>
               <div className="filter-bar">
                 <span className="filter-label">Filter</span>
@@ -811,7 +951,6 @@ export default function App() {
                 <input className="search-input" placeholder="Search tags, notes..."
                   value={search} onChange={e => setSearch(e.target.value)} />
               </div>
-
               {loading ? (
                 <div className="loading"><div className="loading-text">Loading your wardrobe...</div></div>
               ) : filtered.length === 0 ? (
@@ -842,12 +981,12 @@ export default function App() {
                   ))}
                 </div>
               )}
-            </>
+            </div>
           )}
 
           {/* STATS */}
           {view === 'stats' && (
-            <>
+            <div className="inner-pad">
               <div className="page-title">Style Stats</div>
               <div className="stats-grid">
                 <div className="stat-card">
@@ -884,8 +1023,9 @@ export default function App() {
                   }
                 </div>
               </div>
-            </>
+            </div>
           )}
+
         </main>
 
         {/* MODAL */}
