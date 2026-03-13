@@ -410,11 +410,9 @@ const STYLE = `
   .pin-3 { background: linear-gradient(135deg, #C8B4A0, #B09880); }
   .pin-4 { background: linear-gradient(135deg, #B8C4A8, #A0B090); }
 
-  /* ── Door panels (the linen surfaces) ── */
+  /* -- Door panels (the linen surfaces) -- */
   .door-panels {
     position: absolute; inset: 13px; z-index: 3; border-radius: 3px;
-    /* clip panels to the interior rect so they dont overlap the wood casing */
-    overflow: hidden;
   }
 
   .door-panel {
