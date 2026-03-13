@@ -422,9 +422,9 @@ const STYLE = `
   }
 
   /* Default resting state: panels slightly ajar (3-4 deg) revealing seam */
-  .door-panel-left {
+.door-panel-left {
     left: 0; transform-origin: left center;
-    transform: perspective(1200px) rotateY(-2deg);
+    transform: none;
     background: linear-gradient(94deg,
       #BFAF90 0%, #D4C8AA 12%, #E2D8C2 40%,
       #DDD3BC 70%, #CABEA0 100%
@@ -432,6 +432,7 @@ const STYLE = `
   }
   .door-panel-right {
     right: 0; transform-origin: right center;
+    transform: none;
     transform: perspective(1200px) rotateY(2deg);
     background: linear-gradient(266deg,
       #BFAF90 0%, #D4C8AA 12%, #E2D8C2 40%,
