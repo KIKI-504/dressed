@@ -48,7 +48,6 @@ const STYLE = `
     color: var(--warm-mid); margin-bottom: 28px; line-height: 1.6;
   }
 
-  /* Toggle: Wardrobe Look vs Memory Moment */
   .upload-toggle {
     display: flex; gap: 0; margin-bottom: 32px; border: 1px solid var(--soft);
     border-radius: 2px; overflow: hidden; width: fit-content;
@@ -187,9 +186,7 @@ const STYLE = `
     font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase;
     padding: 3px 8px; background: var(--soft); border-radius: 10px; color: var(--warm-mid);
   }
-  .tag.cat-tag {
-    background: var(--ink); color: var(--cream);
-  }
+  .tag.cat-tag { background: var(--ink); color: var(--cream); }
   .card-note { font-size: 0.65rem; color: var(--warm-mid); font-style: italic; line-height: 1.5; margin-bottom: 8px; }
   .delete-btn {
     margin-top: 10px; padding: 4px 12px; font-size: 0.55rem; letter-spacing: 0.15em;
@@ -313,7 +310,7 @@ const STYLE = `
 
   /* ── Door grid layout ── */
   .home-content {
-    position: relative; width: 100%; max-width: 800px; margin-top: 36px;
+    position: relative; width: 100%; max-width: 900px; margin-top: 36px;
     display: flex; align-items: center; gap: 0;
   }
 
@@ -329,84 +326,109 @@ const STYLE = `
     position: relative; aspect-ratio: 3/4; cursor: pointer; user-select: none;
   }
 
-  /* ── Outer shadow/depth ── */
+  /* ── Deep outer shadow — multiple layers for realism ── */
   .door-outer {
-    position: absolute; inset: 0; border-radius: 5px;
+    position: absolute; inset: 0; border-radius: 6px;
     box-shadow:
-      0 2px 4px rgba(44,36,28,0.15),
-      0 8px 20px rgba(44,36,28,0.18),
-      0 20px 50px rgba(44,36,28,0.14),
-      inset 0 1px 0 rgba(255,255,255,0.6),
-      inset 0 -1px 0 rgba(0,0,0,0.1);
+      0 1px 2px rgba(30,20,10,0.20),
+      0 4px 8px rgba(30,20,10,0.18),
+      0 12px 28px rgba(30,20,10,0.16),
+      0 28px 56px rgba(30,20,10,0.12),
+      0 0 0 1px rgba(140,110,60,0.18);
   }
 
-  /* ── Wooden frame/casing — the surround ── */
+  /* ── Wooden frame/casing ── */
   .door-frame {
-    position: absolute; inset: 0; border-radius: 5px; z-index: 1;
-    /* Warm walnut/oak gradient */
-    background: linear-gradient(160deg,
-      #E8DFC8 0%,
-      #D4C8A8 8%,
-      #C8BC98 15%,
-      #D0C4A4 22%,
-      #DCD0B4 35%,
-      #E4D8BC 50%,
-      #DCD0B4 65%,
-      #CEC2A0 78%,
-      #C4B890 85%,
-      #CEBEA4 92%,
-      #DDD0B8 100%
-    );
-  }
-  /* Frame bevel — top highlight */
-  .door-frame::before {
-    content: ''; position: absolute; inset: 0; border-radius: 5px;
+    position: absolute; inset: 0; border-radius: 6px; z-index: 1;
+    /* Rich oak/walnut wood grain simulation */
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.5) 0%, transparent 12%),
-      linear-gradient(90deg, rgba(255,255,255,0.2) 0%, transparent 8%, transparent 92%, rgba(0,0,0,0.08) 100%);
+      repeating-linear-gradient(
+        92deg,
+        transparent 0px, transparent 18px,
+        rgba(120,80,20,0.04) 18px, rgba(120,80,20,0.04) 19px,
+        transparent 19px, transparent 36px,
+        rgba(80,50,10,0.03) 36px, rgba(80,50,10,0.03) 37px
+      ),
+      repeating-linear-gradient(
+        178deg,
+        transparent 0px, transparent 80px,
+        rgba(100,65,15,0.025) 80px, rgba(100,65,15,0.025) 81px
+      ),
+      linear-gradient(168deg,
+        #EDE0C4 0%,
+        #DDD0A8 5%,
+        #CEC098 10%,
+        #D8CAA4 18%,
+        #E4D8B8 28%,
+        #EAE0C4 38%,
+        #E0D4B0 50%,
+        #D4C6A0 62%,
+        #C8BA90 72%,
+        #D0C4A0 82%,
+        #DED2B2 90%,
+        #E6DCC0 100%
+      );
   }
-  /* Frame inner shadow — creates the recess depth */
+  /* Top highlight bevel */
+  .door-frame::before {
+    content: ''; position: absolute; inset: 0; border-radius: 6px;
+    background:
+      linear-gradient(180deg,
+        rgba(255,255,255,0.55) 0%,
+        rgba(255,255,255,0.15) 6%,
+        transparent 18%
+      ),
+      linear-gradient(90deg,
+        rgba(255,255,255,0.25) 0%,
+        transparent 10%,
+        transparent 90%,
+        rgba(0,0,0,0.12) 100%
+      );
+  }
+  /* Inner shadow for depth + border definition */
   .door-frame::after {
-    content: ''; position: absolute; inset: 0; border-radius: 5px;
+    content: ''; position: absolute; inset: 0; border-radius: 6px;
     box-shadow:
-      inset 3px 3px 6px rgba(255,255,255,0.35),
-      inset -3px -3px 6px rgba(0,0,0,0.12),
-      inset 0 0 0 1px rgba(180,160,120,0.4);
+      inset 4px 4px 8px rgba(255,255,255,0.4),
+      inset -4px -4px 8px rgba(0,0,0,0.14),
+      inset 0 0 0 1.5px rgba(160,130,80,0.35),
+      inset 0 0 0 3px rgba(200,170,110,0.10);
   }
 
-  /* ── Gold hinges (left side of frame) ── */
+  /* ── Hinges ── */
   .hinge {
-    position: absolute; left: 10px; width: 16px; height: 28px; z-index: 3;
+    position: absolute; left: 11px; width: 15px; height: 30px; z-index: 3;
     background: linear-gradient(180deg,
-      #F0DC90 0%, #D4B060 20%, #B89040 40%,
-      #C8A850 50%, #D4B860 60%, #C0A040 80%, #A88030 100%
+      #F4E498 0%, #D8B458 15%, #B89040 35%,
+      #CAA848 50%, #D8B85A 65%, #C2A040 82%, #A88030 100%
     );
     border-radius: 3px;
     box-shadow:
-      1px 0 0 rgba(255,255,255,0.4),
-      2px 1px 5px rgba(0,0,0,0.3),
-      inset 0 1px 0 rgba(255,255,255,0.5),
-      inset 0 -1px 0 rgba(0,0,0,0.2);
+      1px 0 0 rgba(255,255,255,0.5),
+      2px 2px 6px rgba(0,0,0,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.55),
+      inset 0 -1px 0 rgba(0,0,0,0.25),
+      inset 1px 0 0 rgba(255,255,255,0.2),
+      inset -1px 0 0 rgba(0,0,0,0.15);
   }
   .hinge::before {
     content: ''; position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%,-50%); width: 6px; height: 6px; border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #C8A040, #7A5A10);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 0 2px rgba(0,0,0,0.3);
+    transform: translate(-50%,-50%); width: 7px; height: 7px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #D8B040, #7A5A10);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.6), inset 0 0 2px rgba(0,0,0,0.4);
   }
-  /* Hinge plate screws */
   .hinge::after {
     content: ''; position: absolute; top: 5px; left: 50%;
     transform: translateX(-50%); width: 3px; height: 3px; border-radius: 50%;
-    background: radial-gradient(circle, #B89030, #6A4A10);
-    box-shadow: 0 13px 0 rgba(100,70,10,0.8);
+    background: radial-gradient(circle, #C09030, #6A4A10);
+    box-shadow: 0 14px 0 rgba(90,60,10,0.85);
   }
-  .hinge-top { top: 18%; }
-  .hinge-bottom { bottom: 18%; }
+  .hinge-top { top: 16%; }
+  .hinge-bottom { bottom: 16%; }
 
-  /* ── Dark interior (always behind panels) ── */
+  /* ── Dark interior ── */
   .door-interior {
-    position: absolute; inset: 14px; border-radius: 2px;
+    position: absolute; inset: 16px; border-radius: 3px;
     overflow: hidden; z-index: 2;
   }
   .interior-business    { background: linear-gradient(170deg, #0e0e20 0%, #181630 60%, #0c0c1c 100%); }
@@ -414,7 +436,6 @@ const STYLE = `
   .interior-party       { background: linear-gradient(170deg, #140818 0%, #1e0c28 60%, #0e0610 100%); }
   .interior-inspiration { background: linear-gradient(170deg, #141008 0%, #1e1810 60%, #100c06 100%); }
 
-  /* Soft ambient light from above inside wardrobe */
   .door-interior::before {
     content: ''; position: absolute;
     top: 0; left: 10%; right: 10%; height: 40%;
@@ -429,11 +450,7 @@ const STYLE = `
     padding-bottom: 10px;
   }
 
-  /* ────────────────────────────────────────
-     CLOTHING ITEMS
-  ──────────────────────────────────────── */
-
-  /* Blazer */
+  /* ── Clothing items (unchanged) ── */
   .blazer-hanger { display: flex; flex-direction: column; align-items: center; width: 58%; }
   .hanger-hook { width: 2px; height: 20px; background: linear-gradient(180deg, #E0C070, #A08040); }
   .hanger-shoulders {
@@ -464,7 +481,6 @@ const STYLE = `
     box-shadow: 0 0 5px rgba(200,160,50,0.5);
   }
 
-  /* Casual: folded denim + sneakers */
   .casual-items { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 68%; }
   .denim-fold {
     width: 100%; height: 50px;
@@ -493,7 +509,6 @@ const STYLE = `
     background: rgba(0,0,0,0.12); border-radius: 0 0 4px 4px;
   }
 
-  /* Party: sequins + heels */
   .party-items { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 66%; }
   .sequin-dress {
     width: 100%; height: 60px;
@@ -530,7 +545,6 @@ const STYLE = `
     box-shadow: 1px 0 4px rgba(0,0,0,0.4);
   }
 
-  /* Inspiration moodboard */
   .moodboard { width: 78%; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .pin-card {
     height: 38px; border-radius: 2px; position: relative;
@@ -548,100 +562,163 @@ const STYLE = `
   .pin-3 { background: linear-gradient(135deg, #D0B8A4, #B89880); }
   .pin-4 { background: linear-gradient(135deg, #C0D0B0, #A0B890); }
 
-  /* ── Door panels (linen surfaces) ── */
+  /* ════════════════════════════════════════
+     DOOR PANELS — realistic linen + recessed
+  ════════════════════════════════════════ */
   .door-panels {
-    position: absolute; inset: 14px; z-index: 3; border-radius: 2px;
-    /* No overflow:hidden — lets interior show through the seam */
+    position: absolute; inset: 16px; z-index: 3; border-radius: 3px;
+    display: flex;
   }
 
   .door-panel {
     position: absolute; top: 0; height: 100%; width: 50%;
-    transition: transform 0.75s cubic-bezier(0.4, 0, 0.15, 1);
+    transition: transform 0.78s cubic-bezier(0.4, 0, 0.15, 1);
     will-change: transform;
-    /* Realistic linen: layered gradients */
+    /* Layered linen: base warm linen colour + fine weave + cross-grain */
     background:
-      linear-gradient(180deg,
-        rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.02) 50%, rgba(255,255,255,0.02) 100%
-      ),
-      linear-gradient(90deg, #C8BEA0 0%, #DDD4BC 15%, #E8E0CC 35%, #E4DCC8 65%, #D8CEB8 85%, #C8BEA0 100%);
-  }
-
-  /* Burlap/linen weave texture */
-  .door-panel::before {
-    content: ''; position: absolute; inset: 0; pointer-events: none;
-    background-image:
       repeating-linear-gradient(
-        0deg, transparent, transparent 2px,
-        rgba(0,0,0,0.022) 2px, rgba(0,0,0,0.022) 3px
+        0deg,
+        transparent 0px, transparent 2px,
+        rgba(100,75,40,0.028) 2px, rgba(100,75,40,0.028) 3px,
+        transparent 3px, transparent 5px,
+        rgba(120,90,50,0.018) 5px, rgba(120,90,50,0.018) 6px
       ),
       repeating-linear-gradient(
-        90deg, transparent, transparent 2px,
-        rgba(0,0,0,0.018) 2px, rgba(0,0,0,0.018) 3px
+        90deg,
+        transparent 0px, transparent 2px,
+        rgba(100,75,40,0.022) 2px, rgba(100,75,40,0.022) 3px,
+        transparent 3px, transparent 5px,
+        rgba(80,60,30,0.015) 5px, rgba(80,60,30,0.015) 6px
+      ),
+      linear-gradient(168deg,
+        #EDE4D0 0%,
+        #E4DABC 15%,
+        #DDD2B4 30%,
+        #D8CDB0 45%,
+        #E0D6BC 60%,
+        #E6DEC8 75%,
+        #DDD4B8 88%,
+        #D4CAA8 100%
       );
   }
 
-  /* Panel bevel top edge */
+  /* Recessed panel inset — the key realism detail */
+  .door-panel::before {
+    content: ''; position: absolute; pointer-events: none;
+    /* Outer recess border */
+    top: 12%; left: 10%; right: 10%; bottom: 12%;
+    border-radius: 2px;
+    box-shadow:
+      /* Deep inset shadow top-left (light comes from top-right) */
+      inset 2px 2px 5px rgba(60,40,10,0.22),
+      inset 1px 1px 2px rgba(40,25,5,0.18),
+      /* Bright highlight bottom-right */
+      inset -2px -2px 4px rgba(255,248,220,0.45),
+      inset -1px -1px 2px rgba(255,245,210,0.3),
+      /* Outer border of the recess */
+      0 0 0 1px rgba(160,130,80,0.22),
+      /* Subtle outer highlight above recess */
+      0 -1px 0 rgba(255,250,230,0.5);
+  }
+
+  /* Second recessed panel (inner, smaller) for double-panel door look */
   .door-panel::after {
-    content: ''; position: absolute; inset: 0; pointer-events: none;
+    content: ''; position: absolute; pointer-events: none;
+    top: 20%; left: 18%; right: 18%; bottom: 20%;
+    border-radius: 1px;
+    box-shadow:
+      inset 1px 1px 3px rgba(60,40,10,0.16),
+      inset -1px -1px 3px rgba(255,248,220,0.35),
+      0 0 0 1px rgba(170,140,90,0.16);
   }
 
   .door-panel-left {
     left: 0; transform-origin: left center;
     transform: none;
-    /* Seam shadow on right edge */
-    box-shadow: inset -8px 0 12px rgba(20,14,6,0.14), inset -1px 0 3px rgba(0,0,0,0.1);
+    box-shadow:
+      inset -10px 0 18px rgba(20,12,4,0.18),
+      inset -2px 0 4px rgba(0,0,0,0.12),
+      /* Right edge seam line */
+      inset -1px 0 0 rgba(80,55,20,0.3);
   }
   .door-panel-right {
     right: 0; transform-origin: right center;
     transform: none;
-    /* Seam shadow on left edge */
-    box-shadow: inset 8px 0 12px rgba(20,14,6,0.14), inset 1px 0 3px rgba(0,0,0,0.1);
+    box-shadow:
+      inset 10px 0 18px rgba(20,12,4,0.18),
+      inset 2px 0 4px rgba(0,0,0,0.12),
+      /* Left edge seam line */
+      inset 1px 0 0 rgba(80,55,20,0.3);
+  }
+
+  /* Top edge highlight on both panels */
+  .door-panel-left::before, .door-panel-right::before {
+    /* Reuse ::before for recessed panel — top bevel handled by panel bg */
   }
 
   /* Open state */
-  .door-wrapper.open .door-panel-left  { transform: perspective(900px) rotateY(-28deg); }
-  .door-wrapper.open .door-panel-right { transform: perspective(900px) rotateY(28deg); }
+  .door-wrapper.open .door-panel-left  { transform: perspective(1000px) rotateY(-30deg); }
+  .door-wrapper.open .door-panel-right { transform: perspective(1000px) rotateY(30deg); }
 
-  /* ── Category label on panel ── */
+  /* ── Category label ── */
   .door-label {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
     font-size: clamp(9px, 1.6vw, 12px); letter-spacing: 0.34em;
-    color: rgba(40,30,18,0.55);
+    color: rgba(50,35,15,0.52);
     z-index: 4; pointer-events: none;
     text-transform: uppercase; font-weight: 400;
     transition: opacity 0.3s ease;
+    /* Subtle text shadow for embossed feel */
+    text-shadow: 0 1px 0 rgba(255,248,220,0.6), 0 -1px 0 rgba(40,25,5,0.15);
   }
   .door-wrapper.open .door-label { opacity: 0; }
 
   /* ── Brass lever handles ── */
   .door-handle { position: absolute; top: 50%; z-index: 5; }
-  .handle-left  { right: 8px; transform: translateY(-50%); }
-  .handle-right { left: 8px;  transform: translateY(-50%); }
+  .handle-left  { right: 6px; transform: translateY(-50%); }
+  .handle-right { left: 6px;  transform: translateY(-50%); }
 
   .lever { display: flex; flex-direction: column; align-items: center; }
   .lever-rose {
-    width: 13px; height: 8px;
-    background: linear-gradient(180deg, #F0DC90 0%, #D4B060 40%, #B89040 100%);
-    border-radius: 2px 2px 0 0;
+    width: 14px; height: 9px;
+    background: linear-gradient(180deg,
+      #F8E898 0%, #E0C060 30%, #C8A040 60%, #B89030 100%
+    );
+    border-radius: 3px 3px 1px 1px;
     box-shadow:
-      0 -1px 0 rgba(255,255,255,0.4),
-      0 2px 4px rgba(0,0,0,0.3),
-      inset 0 1px 0 rgba(255,255,255,0.4);
+      0 -1px 0 rgba(255,255,255,0.5),
+      0 2px 5px rgba(0,0,0,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      inset 1px 0 0 rgba(255,255,255,0.2),
+      inset -1px 0 0 rgba(0,0,0,0.15);
   }
   .lever-shaft {
-    width: 6px; height: 28px;
+    width: 7px; height: 30px;
     background: linear-gradient(90deg,
-      #A88030 0%, #D4B060 25%, #F0DC90 50%, #D4B060 75%, #A88030 100%
+      #906820 0%,
+      #C8A040 20%,
+      #F0D870 45%,
+      #E0C058 55%,
+      #C0A038 78%,
+      #906820 100%
     );
     border-radius: 1px;
-    box-shadow: 1px 0 3px rgba(0,0,0,0.25), -1px 0 2px rgba(255,255,255,0.1);
+    box-shadow:
+      2px 0 4px rgba(0,0,0,0.28),
+      -1px 0 2px rgba(255,255,255,0.15),
+      inset 0 0 0 0.5px rgba(255,255,255,0.1);
   }
   .lever-end {
-    width: 14px; height: 6px;
-    background: linear-gradient(180deg, #D4B060 0%, #F0DC90 50%, #C8A850 100%);
-    border-radius: 3px; margin-top: 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.2);
+    width: 16px; height: 7px;
+    background: linear-gradient(180deg,
+      #C8A040 0%, #F0D870 40%, #E0C058 70%, #C0A038 100%
+    );
+    border-radius: 4px;
+    box-shadow:
+      0 3px 6px rgba(0,0,0,0.38),
+      0 1px 0 rgba(255,255,255,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.3);
   }
 
   /* ── Tap hint ── */
@@ -655,32 +732,31 @@ const STYLE = `
   .door-wrapper.open .door-hint { opacity: 1; }
 
   /* ════════════════════════════════════════
-     SCRAPBOOK — floats RIGHT of grid, centred
+     SCRAPBOOK — floats RIGHT of grid
   ════════════════════════════════════════ */
   .scrapbook-zone {
-    width: 160px; flex-shrink: 0;
+    width: 200px; flex-shrink: 0;
     display: flex; flex-direction: column; align-items: center;
-    margin-left: 24px; margin-top: 0;
-    /* vertically centred by flexbox on .home-content */
+    margin-left: 28px;
   }
-  .polaroid-stack { position: relative; width: 140px; height: 200px; }
+  .polaroid-stack { position: relative; width: 160px; height: 210px; }
   .polaroid {
     position: absolute; background: white; padding: 7px 7px 22px;
     box-shadow: 2px 4px 16px rgba(44,36,32,0.22), 0 1px 3px rgba(0,0,0,0.1);
   }
-  .polaroid-1 { width: 88px; height: 108px; bottom: 30px; left: 0; transform: rotate(-9deg); }
-  .polaroid-2 { width: 80px; height: 98px;  bottom: 50px; left: 28px; transform: rotate(5deg); z-index: 2; }
-  .polaroid-3 { width: 84px; height: 102px; bottom: 20px; right: 0; transform: rotate(-3deg); z-index: 1; }
+  .polaroid-1 { width: 92px; height: 112px; bottom: 30px; left: 0; transform: rotate(-9deg); }
+  .polaroid-2 { width: 84px; height: 102px; bottom: 52px; left: 30px; transform: rotate(5deg); z-index: 2; }
+  .polaroid-3 { width: 88px; height: 108px; bottom: 20px; right: 0; transform: rotate(-3deg); z-index: 1; }
   .pol-img { width: 100%; height: 72%; }
   .pol-img-1 { background: linear-gradient(135deg, #D8C8A8, #C0B088); }
   .pol-img-2 { background: linear-gradient(135deg, #A8B8CC, #8898B8); }
   .pol-img-3 { background: linear-gradient(135deg, #CCB8A4, #B0988A); }
   .pol-cap { font-size: 7px; color: var(--warm-mid); text-align: center; margin-top: 3px; font-style: italic; }
 
-  /* Realistic camera SVG below polaroids */
-  .scrapbook-cam { margin-top: 8px; transform: rotate(5deg); }
+  /* Camera widget */
+  .scrapbook-cam { margin-top: 12px; transform: rotate(4deg); width: 160px; }
 
-  .scrapbook-text { text-align: center; margin-top: 16px; }
+  .scrapbook-text { text-align: center; margin-top: 14px; }
   .fim-label {
     font-size: 7px; letter-spacing: 0.28em; color: var(--warm-mid);
     text-transform: uppercase; display: block; font-weight: 300;
@@ -753,33 +829,142 @@ async function compressImage(file) {
   })
 }
 
-/* ── Camera SVG (realistic) ── */
+/* ── Camera SVG — bigger, more realistic ── */
 function CameraSVG() {
   return (
-    <svg width="90" viewBox="0 0 130 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Body */}
-      <rect x="6" y="22" width="118" height="58" rx="7" fill="#DEDAD2" stroke="#C4C0B8" strokeWidth="1.5"/>
-      <rect x="6" y="22" width="118" height="16" rx="7" fill="#CECAB8" stroke="#C0BCA8" strokeWidth="1.5"/>
-      {/* Viewfinder bump */}
-      <rect x="28" y="10" width="30" height="16" rx="5" fill="#D8D4CC" stroke="#C8C4B8" strokeWidth="1.5"/>
-      {/* Lens ring */}
-      <circle cx="62" cy="56" r="22" fill="#C0BDB4" stroke="#A8A49C" strokeWidth="2"/>
-      <circle cx="62" cy="56" r="17" fill="#282828" stroke="#484848" strokeWidth="1.5"/>
-      <circle cx="62" cy="56" r="12" fill="#181818"/>
-      <circle cx="62" cy="56" r="7" fill="#080808"/>
-      {/* Lens reflections */}
-      <circle cx="57" cy="51" r="3.5" fill="rgba(255,255,255,0.22)"/>
-      <circle cx="66" cy="60" r="1.5" fill="rgba(255,255,255,0.1)"/>
-      {/* Shutter button */}
-      <circle cx="97" cy="28" r="7" fill="#D0A868" stroke="#B89050" strokeWidth="1"/>
-      <circle cx="97" cy="28" r="4" fill="#C09040"/>
-      {/* Flash */}
-      <rect x="22" y="26" width="18" height="10" rx="2" fill="#E4EEF8" stroke="#C8D8E8" strokeWidth="1"/>
-      {/* Strap lugs */}
-      <rect x="6" y="35" width="5" height="10" rx="2" fill="#C4C0B8"/>
-      <rect x="119" y="35" width="5" height="10" rx="2" fill="#C4C0B8"/>
-      {/* Brand label area */}
-      <rect x="72" y="42" width="40" height="6" rx="1" fill="rgba(0,0,0,0.06)"/>
+    <svg viewBox="0 0 220 150" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'auto'}}>
+      <defs>
+        <linearGradient id="camBody" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#F2EDE2"/>
+          <stop offset="35%" stopColor="#E8E0D0"/>
+          <stop offset="100%" stopColor="#C8BEA8"/>
+        </linearGradient>
+        <linearGradient id="camTop" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#E4DCC8"/>
+          <stop offset="100%" stopColor="#CCC0A4"/>
+        </linearGradient>
+        <linearGradient id="lensBarrel" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#E0C868"/>
+          <stop offset="25%" stopColor="#C8A840"/>
+          <stop offset="50%" stopColor="#B09030"/>
+          <stop offset="75%" stopColor="#C8A840"/>
+          <stop offset="100%" stopColor="#E0C868"/>
+        </linearGradient>
+        <linearGradient id="lensGlass" x1="25%" y1="20%" x2="75%" y2="80%">
+          <stop offset="0%" stopColor="#3A3A50"/>
+          <stop offset="25%" stopColor="#181828"/>
+          <stop offset="60%" stopColor="#0A0A16"/>
+          <stop offset="100%" stopColor="#222238"/>
+        </linearGradient>
+        <radialGradient id="lensGlow" cx="38%" cy="32%" r="55%">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.38)"/>
+          <stop offset="45%" stopColor="rgba(255,255,255,0.06)"/>
+          <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
+        </radialGradient>
+        <linearGradient id="shutterBtn" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#E8C860"/>
+          <stop offset="50%" stopColor="#C0A040"/>
+          <stop offset="100%" stopColor="#A08030"/>
+        </linearGradient>
+        <filter id="bodyShadow" x="-5%" y="-5%" width="115%" height="120%">
+          <feDropShadow dx="2" dy="5" stdDeviation="7" floodOpacity="0.32"/>
+        </filter>
+        <filter id="lensShadow">
+          <feDropShadow dx="1" dy="2" stdDeviation="4" floodOpacity="0.45"/>
+        </filter>
+      </defs>
+
+      {/* ── Main camera body ── */}
+      <rect x="8" y="32" width="204" height="104" rx="10" ry="10"
+        fill="url(#camBody)" filter="url(#bodyShadow)"/>
+
+      {/* Body top ridge — slightly darker */}
+      <rect x="8" y="32" width="204" height="18" rx="10" ry="10" fill="url(#camTop)"/>
+      <rect x="8" y="44" width="204" height="6" fill="url(#camTop)"/>
+
+      {/* Subtle body texture line */}
+      <rect x="8" y="118" width="204" height="1.5" rx="0.75" fill="rgba(100,75,35,0.12)"/>
+      <rect x="8" y="50" width="204" height="1" rx="0.5" fill="rgba(255,255,255,0.35)"/>
+
+      {/* ── Viewfinder bump ── */}
+      <rect x="62" y="16" width="68" height="20" rx="6" ry="6" fill="#DDD6C0"/>
+      <rect x="63" y="17" width="66" height="18" rx="5" ry="5" fill="#D4CCBA"/>
+      {/* Viewfinder window */}
+      <rect x="70" y="20" width="32" height="13" rx="2.5" fill="#1A1A28"/>
+      <rect x="71" y="21" width="30" height="11" rx="2" fill="#0E0E1C"/>
+      {/* Viewfinder glass sheen */}
+      <rect x="72" y="22" width="12" height="4" rx="1" fill="rgba(255,255,255,0.22)"/>
+      <rect x="85" y="25" width="6" height="2" rx="1" fill="rgba(255,255,255,0.1)"/>
+
+      {/* ── Flash unit ── */}
+      <rect x="112" y="18" width="30" height="18" rx="4" fill="#E8E2D4"/>
+      <rect x="113" y="19" width="28" height="16" rx="3" fill="#EEF4FF"/>
+      <rect x="114" y="20" width="14" height="7" rx="1.5" fill="rgba(255,255,248,0.9)"/>
+      {/* Flash reflection */}
+      <rect x="115" y="21" width="5" height="2" rx="1" fill="rgba(255,255,255,0.7)"/>
+
+      {/* ── Strap lugs ── */}
+      <rect x="5" y="50" width="9" height="16" rx="3" fill="#BEB4A0"/>
+      <rect x="6" y="51" width="7" height="14" rx="2" fill="#B0A698"/>
+      <rect x="206" y="50" width="9" height="16" rx="3" fill="#BEB4A0"/>
+      <rect x="207" y="51" width="7" height="14" rx="2" fill="#B0A698"/>
+
+      {/* ── Lens barrel — outermost gold ring ── */}
+      <circle cx="84" cy="88" r="50" fill="url(#lensBarrel)" filter="url(#lensShadow)"/>
+      {/* Lens barrel grooves */}
+      <circle cx="84" cy="88" r="50" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5"/>
+      <circle cx="84" cy="88" r="47" fill="none" stroke="rgba(0,0,0,0.18)" strokeWidth="1"/>
+      <circle cx="84" cy="88" r="44" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8"/>
+
+      {/* Lens dark barrel body */}
+      <circle cx="84" cy="88" r="41" fill="#201C18"/>
+      {/* Inner gold ring */}
+      <circle cx="84" cy="88" r="38" fill="none" stroke="#D4B050" strokeWidth="1.5"/>
+      <circle cx="84" cy="88" r="36" fill="none" stroke="rgba(200,160,60,0.4)" strokeWidth="0.6"/>
+
+      {/* Lens glass element */}
+      <circle cx="84" cy="88" r="34" fill="url(#lensGlass)"/>
+      {/* Inner aperture rings */}
+      <circle cx="84" cy="88" r="28" fill="none" stroke="rgba(180,160,100,0.25)" strokeWidth="1"/>
+      <circle cx="84" cy="88" r="22" fill="none" stroke="rgba(160,140,80,0.2)" strokeWidth="0.8"/>
+      {/* Centre aperture */}
+      <circle cx="84" cy="88" r="16" fill="#060610"/>
+      {/* Lens coating glow */}
+      <circle cx="84" cy="88" r="34" fill="url(#lensGlow)"/>
+      {/* Main lens shine — large */}
+      <ellipse cx="74" cy="77" rx="7" ry="5" fill="rgba(255,255,255,0.18)" transform="rotate(-25 74 77)"/>
+      {/* Small secondary glint */}
+      <circle cx="95" cy="99" rx="2.5" ry="2.5" fill="rgba(255,255,255,0.1)"/>
+      <circle cx="72" cy="75" r="2" fill="rgba(255,255,255,0.35)"/>
+
+      {/* ── Shutter button ── */}
+      <circle cx="178" cy="40" r="11" fill="#C8BCA8"/>
+      <circle cx="178" cy="40" r="8" fill="url(#shutterBtn)"/>
+      <circle cx="178" cy="40" r="4.5" fill="#C8A848"/>
+      {/* Shutter highlight */}
+      <circle cx="175" cy="37" r="2" fill="rgba(255,255,255,0.3)"/>
+
+      {/* ── Film advance knob ── */}
+      <rect x="168" y="100" width="34" height="26" rx="5" fill="#C0B8A4"/>
+      <rect x="170" y="102" width="30" height="22" rx="4" fill="#B4ACAA"/>
+      {/* Knurl lines */}
+      <line x1="174" y1="104" x2="186" y2="122" stroke="rgba(0,0,0,0.12)" strokeWidth="1.5"/>
+      <line x1="179" y1="103" x2="191" y2="121" stroke="rgba(0,0,0,0.10)" strokeWidth="1.5"/>
+      <line x1="184" y1="103" x2="196" y2="121" stroke="rgba(0,0,0,0.10)" strokeWidth="1.5"/>
+      <line x1="198" y1="104" x2="186" y2="122" stroke="rgba(0,0,0,0.10)" strokeWidth="1.5"/>
+
+      {/* ── Brand label plate ── */}
+      <rect x="138" y="74" width="52" height="12" rx="1.5" fill="rgba(160,140,100,0.15)"/>
+      <text x="164" y="83" fontFamily="Georgia, serif" fontSize="7.5" fill="rgba(80,60,30,0.65)"
+        textAnchor="middle" letterSpacing="1.5">dressed</text>
+
+      {/* ── Mode dial (top right) ── */}
+      <circle cx="192" cy="36" r="10" fill="#D0C8B4"/>
+      <circle cx="192" cy="36" r="8" fill="#C4BCAA"/>
+      <circle cx="192" cy="36" r="5" fill="#B8B0A0"/>
+      <line x1="192" y1="28" x2="192" y2="31" stroke="rgba(80,60,30,0.4)" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="192" y1="41" x2="192" y2="44" stroke="rgba(80,60,30,0.2)" strokeWidth="1" strokeLinecap="round"/>
+      <line x1="184" y1="36" x2="187" y2="36" stroke="rgba(80,60,30,0.2)" strokeWidth="1" strokeLinecap="round"/>
     </svg>
   )
 }
@@ -788,18 +973,14 @@ function CameraSVG() {
 function Door({ id, label, interior, isOpen, onClick }) {
   return (
     <div className={`door-wrapper ${isOpen ? 'open' : ''}`} onClick={onClick}>
-      {/* Outer glow/shadow */}
       <div className="door-outer"></div>
-      {/* Wooden frame */}
       <div className="door-frame">
         <div className="hinge hinge-top"></div>
         <div className="hinge hinge-bottom"></div>
       </div>
-      {/* Interior */}
       <div className={`door-interior interior-${id}`}>
         <div className="interior-content">{interior}</div>
       </div>
-      {/* Panels */}
       <div className="door-panels">
         <div className="door-panel door-panel-left">
           <div className="door-label">{label}</div>
@@ -936,90 +1117,32 @@ function HomePage({ outfits, onDoorClick, onUploadClick }) {
           } />
 
         </div>
-<svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}>
-  {/* Camera body */}
-  <defs>
-    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stopColor="#f0ece4"/>
-      <stop offset="40%" stopColor="#e8e2d8"/>
-      <stop offset="100%" stopColor="#c8c0b0"/>
-    </linearGradient>
-    <linearGradient id="lensGrad" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stopColor="#4a4a5a"/>
-      <stop offset="30%" stopColor="#1a1a2a"/>
-      <stop offset="70%" stopColor="#0d0d1a"/>
-      <stop offset="100%" stopColor="#2a2a3a"/>
-    </linearGradient>
-    <linearGradient id="lensRing" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#d4af70"/>
-      <stop offset="50%" stopColor="#b8960c"/>
-      <stop offset="100%" stopColor="#d4af70"/>
-    </linearGradient>
-    <radialGradient id="lensShine" cx="35%" cy="30%" r="50%">
-      <stop offset="0%" stopColor="rgba(255,255,255,0.5)"/>
-      <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
-    </radialGradient>
-    <filter id="camShadow">
-      <feDropShadow dx="3" dy="5" stdDeviation="6" floodOpacity="0.35"/>
-    </filter>
-  </defs>
-  
-  {/* Main body */}
-  <rect x="10" y="30" width="200" height="115" rx="12" ry="12" fill="url(#bodyGrad)" filter="url(#camShadow)"/>
-  
-  {/* Top ridge / viewfinder bump */}
-  <rect x="70" y="18" width="80" height="22" rx="6" ry="6" fill="#ddd8cc"/>
-  <rect x="78" y="22" width="28" height="14" rx="3" fill="#2a2a2a"/>
-  <rect x="79" y="23" width="26" height="12" rx="2" fill="#1a1a1a"/>
-  {/* Viewfinder glass shine */}
-  <rect x="80" y="24" width="10" height="4" rx="1" fill="rgba(255,255,255,0.25)"/>
-  
-  {/* Flash unit */}
-  <rect x="118" y="20" width="22" height="16" rx="3" fill="#e8e4dc"/>
-  <rect x="120" y="22" width="18" height="12" rx="2" fill="#fffde0"/>
-  <rect x="121" y="23" width="8" height="5" rx="1" fill="rgba(255,255,230,0.8)"/>
-  
-  {/* Body texture lines */}
-  <rect x="10" y="42" width="200" height="2" rx="1" fill="rgba(0,0,0,0.06)"/>
-  <rect x="10" y="128" width="200" height="2" rx="1" fill="rgba(0,0,0,0.06)"/>
-  
-  {/* Lens barrel outer ring - gold */}
-  <circle cx="88" cy="88" r="46" fill="url(#lensRing)"/>
-  {/* Lens barrel mid */}
-  <circle cx="88" cy="88" r="42" fill="#2a2520"/>
-  {/* Lens ring detail */}
-  <circle cx="88" cy="88" r="38" fill="none" stroke="#d4af70" strokeWidth="1.5"/>
-  {/* Inner lens glass */}
-  <circle cx="88" cy="88" r="34" fill="url(#lensGrad)"/>
-  {/* Lens inner ring */}
-  <circle cx="88" cy="88" r="28" fill="none" stroke="rgba(212,175,112,0.4)" strokeWidth="1"/>
-  {/* Lens innermost */}
-  <circle cx="88" cy="88" r="22" fill="#050510"/>
-  {/* Lens shine */}
-  <circle cx="88" cy="88" r="34" fill="url(#lensShine)"/>
-  {/* Tiny aperture glint */}
-  <circle cx="80" cy="80" r="4" fill="rgba(255,255,255,0.2)"/>
-  <circle cx="78" cy="78" r="2" fill="rgba(255,255,255,0.4)"/>
-  
-  {/* Shutter button */}
-  <circle cx="175" cy="44" r="9" fill="#c8c0b0"/>
-  <circle cx="175" cy="44" r="6" fill="#b0a898"/>
-  <circle cx="175" cy="44" r="3" fill="#988878"/>
-  
-  {/* Brand text */}
-  <text x="148" y="82" fontFamily="serif" fontSize="9" fill="rgba(100,90,70,0.7)" letterSpacing="1">dressed</text>
-  
-  {/* Film advance wheel */}
-  <rect x="170" y="95" width="28" height="22" rx="4" fill="#c8bfb0"/>
-  <rect x="172" y="97" width="24" height="18" rx="3" fill="#b8afa0"/>
-  <line x1="176" y1="100" x2="190" y2="114" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5"/>
-  <line x1="190" y1="100" x2="176" y2="114" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5"/>
-  
-  {/* Strap lug left */}
-  <rect x="8" y="55" width="8" height="20" rx="3" fill="#c0b8a8"/>
-  {/* Strap lug right */}
-  <rect x="204" y="55" width="8" height="20" rx="3" fill="#c0b8a8"/>
-</svg>
+
+        {/* Scrapbook / camera widget */}
+        <div className="scrapbook-zone">
+          <div className="polaroid-stack">
+            <div className="polaroid polaroid-1">
+              <div className="pol-img pol-img-1"></div>
+              <div className="pol-cap">summer fits</div>
+            </div>
+            <div className="polaroid polaroid-2">
+              <div className="pol-img pol-img-2"></div>
+              <div className="pol-cap">brunch look</div>
+            </div>
+            <div className="polaroid polaroid-3">
+              <div className="pol-img pol-img-3"></div>
+              <div className="pol-cap">night out</div>
+            </div>
+          </div>
+          <div className="scrapbook-cam"><CameraSVG /></div>
+          <div className="scrapbook-text">
+            <span className="fim-label">Fashion in Motion</span>
+            <span className="fim-sub">Upload moments with friends</span>
+          </div>
+        </div>
+
+      </div>
+
       {/* Recent looks */}
       {recentThree.length > 0 && (
         <div className="recent-strip">
@@ -1059,8 +1182,7 @@ export default function App() {
   const [modalReaction, setModalReaction] = useState(null)
   const [saving, setSaving]               = useState(false)
   const [newTag, setNewTag]               = useState('')
-  const [uploadMode, setUploadMode]       = useState('wardrobe') // 'wardrobe' | 'memory'
-  // Category picker: { item, resolve }
+  const [uploadMode, setUploadMode]       = useState('wardrobe')
   const [catPicker, setCatPicker]         = useState(null)
 
   const nextId = useRef(Date.now())
@@ -1082,7 +1204,6 @@ export default function App() {
     processItem(waiting)
   }, [queue])
 
-  /* Ask Emery which category before saving (wardrobe mode only) */
   function askCategory(item) {
     return new Promise(resolve => setCatPicker({ item, resolve }))
   }
@@ -1095,24 +1216,20 @@ export default function App() {
       const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
 
       if (item.mode === 'memory') {
-        /* ── Fashion in Motion: save to memories bucket, no AI tagging ── */
         const { error: upErr } = await supabaseAdmin.storage
           .from('outfit-memories').upload(path, item.file, { contentType: item.file.type })
         if (upErr) throw upErr
         setQueue(q => q.map(i => i.id === item.id ? { ...i, status: 'done' } : i))
       } else {
-        /* ── Wardrobe look: upload, AI tag, then ask category ── */
         const { error: upErr } = await supabaseAdmin.storage
           .from('outfit-images').upload(path, item.file, { contentType: item.file.type })
         if (upErr) throw upErr
 
         const { data: { publicUrl } } = supabaseAdmin.storage.from('outfit-images').getPublicUrl(path)
 
-        // Ask category BEFORE AI (so Emery isn't waiting)
         const chosenCategory = await askCategory({ ...item, publicUrl })
         setCatPicker(null)
 
-        // AI tagging
         const resp = await fetch('/api/analyse', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ imageUrl: publicUrl })
@@ -1251,7 +1368,6 @@ export default function App() {
               <div className="upload-section">
                 <div className="page-title" style={{ marginBottom: 20 }}>Add Looks</div>
 
-                {/* Toggle */}
                 <div className="upload-toggle">
                   <button
                     className={`toggle-btn ${uploadMode === 'wardrobe' ? 'active' : ''}`}
@@ -1397,19 +1513,17 @@ export default function App() {
 
         </main>
 
-        {/* Category picker modal */}
         {catPicker && (
           <CategoryPickerModal
             imagePreview={catPicker.item.preview}
             onConfirm={cat => catPicker.resolve(cat)}
             onCancel={() => {
-              catPicker.resolve('casual') // default if dismissed
+              catPicker.resolve('casual')
               setCatPicker(null)
             }}
           />
         )}
 
-        {/* Outfit detail modal */}
         {selected && (
           <div className="modal-backdrop" onClick={e => { if (e.target === e.currentTarget) setSelected(null) }}>
             <div className="modal">
