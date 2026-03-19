@@ -936,31 +936,90 @@ function HomePage({ outfits, onDoorClick, onUploadClick }) {
           } />
 
         </div>
-
-        {/* Scrapbook / camera — floats right, vertically centred */}
-        <div className="scrapbook-zone">
-          <div className="polaroid-stack">
-            <div className="polaroid polaroid-1">
-              <div className="pol-img pol-img-1"></div>
-              <div className="pol-cap">summer fits</div>
-            </div>
-            <div className="polaroid polaroid-2">
-              <div className="pol-img pol-img-2"></div>
-              <div className="pol-cap">brunch look</div>
-            </div>
-            <div className="polaroid polaroid-3">
-              <div className="pol-img pol-img-3"></div>
-              <div className="pol-cap">night out</div>
-            </div>
-          </div>
-          <div className="scrapbook-cam"><CameraSVG /></div>
-          <div className="scrapbook-text">
-            <span className="fim-label">Fashion in Motion</span>
-            <span className="fim-sub">Upload moments with friends</span>
-          </div>
-        </div>
-      </div>
-
+<svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}>
+  {/* Camera body */}
+  <defs>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#f0ece4"/>
+      <stop offset="40%" stopColor="#e8e2d8"/>
+      <stop offset="100%" stopColor="#c8c0b0"/>
+    </linearGradient>
+    <linearGradient id="lensGrad" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stopColor="#4a4a5a"/>
+      <stop offset="30%" stopColor="#1a1a2a"/>
+      <stop offset="70%" stopColor="#0d0d1a"/>
+      <stop offset="100%" stopColor="#2a2a3a"/>
+    </linearGradient>
+    <linearGradient id="lensRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#d4af70"/>
+      <stop offset="50%" stopColor="#b8960c"/>
+      <stop offset="100%" stopColor="#d4af70"/>
+    </linearGradient>
+    <radialGradient id="lensShine" cx="35%" cy="30%" r="50%">
+      <stop offset="0%" stopColor="rgba(255,255,255,0.5)"/>
+      <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <filter id="camShadow">
+      <feDropShadow dx="3" dy="5" stdDeviation="6" floodOpacity="0.35"/>
+    </filter>
+  </defs>
+  
+  {/* Main body */}
+  <rect x="10" y="30" width="200" height="115" rx="12" ry="12" fill="url(#bodyGrad)" filter="url(#camShadow)"/>
+  
+  {/* Top ridge / viewfinder bump */}
+  <rect x="70" y="18" width="80" height="22" rx="6" ry="6" fill="#ddd8cc"/>
+  <rect x="78" y="22" width="28" height="14" rx="3" fill="#2a2a2a"/>
+  <rect x="79" y="23" width="26" height="12" rx="2" fill="#1a1a1a"/>
+  {/* Viewfinder glass shine */}
+  <rect x="80" y="24" width="10" height="4" rx="1" fill="rgba(255,255,255,0.25)"/>
+  
+  {/* Flash unit */}
+  <rect x="118" y="20" width="22" height="16" rx="3" fill="#e8e4dc"/>
+  <rect x="120" y="22" width="18" height="12" rx="2" fill="#fffde0"/>
+  <rect x="121" y="23" width="8" height="5" rx="1" fill="rgba(255,255,230,0.8)"/>
+  
+  {/* Body texture lines */}
+  <rect x="10" y="42" width="200" height="2" rx="1" fill="rgba(0,0,0,0.06)"/>
+  <rect x="10" y="128" width="200" height="2" rx="1" fill="rgba(0,0,0,0.06)"/>
+  
+  {/* Lens barrel outer ring - gold */}
+  <circle cx="88" cy="88" r="46" fill="url(#lensRing)"/>
+  {/* Lens barrel mid */}
+  <circle cx="88" cy="88" r="42" fill="#2a2520"/>
+  {/* Lens ring detail */}
+  <circle cx="88" cy="88" r="38" fill="none" stroke="#d4af70" strokeWidth="1.5"/>
+  {/* Inner lens glass */}
+  <circle cx="88" cy="88" r="34" fill="url(#lensGrad)"/>
+  {/* Lens inner ring */}
+  <circle cx="88" cy="88" r="28" fill="none" stroke="rgba(212,175,112,0.4)" strokeWidth="1"/>
+  {/* Lens innermost */}
+  <circle cx="88" cy="88" r="22" fill="#050510"/>
+  {/* Lens shine */}
+  <circle cx="88" cy="88" r="34" fill="url(#lensShine)"/>
+  {/* Tiny aperture glint */}
+  <circle cx="80" cy="80" r="4" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="78" cy="78" r="2" fill="rgba(255,255,255,0.4)"/>
+  
+  {/* Shutter button */}
+  <circle cx="175" cy="44" r="9" fill="#c8c0b0"/>
+  <circle cx="175" cy="44" r="6" fill="#b0a898"/>
+  <circle cx="175" cy="44" r="3" fill="#988878"/>
+  
+  {/* Brand text */}
+  <text x="148" y="82" fontFamily="serif" fontSize="9" fill="rgba(100,90,70,0.7)" letterSpacing="1">dressed</text>
+  
+  {/* Film advance wheel */}
+  <rect x="170" y="95" width="28" height="22" rx="4" fill="#c8bfb0"/>
+  <rect x="172" y="97" width="24" height="18" rx="3" fill="#b8afa0"/>
+  <line x1="176" y1="100" x2="190" y2="114" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5"/>
+  <line x1="190" y1="100" x2="176" y2="114" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5"/>
+  
+  {/* Strap lug left */}
+  <rect x="8" y="55" width="8" height="20" rx="3" fill="#c0b8a8"/>
+  {/* Strap lug right */}
+  <rect x="204" y="55" width="8" height="20" rx="3" fill="#c0b8a8"/>
+</svg>
       {/* Recent looks */}
       {recentThree.length > 0 && (
         <div className="recent-strip">
